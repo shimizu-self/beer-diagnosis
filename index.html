@@ -306,6 +306,82 @@
       white-space: nowrap;
     }
 
+    .beer-master {
+      margin-top: 24px;
+      padding-top: 2px;
+      border-top: 1px dashed var(--line);
+    }
+
+    .beer-list-help {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .beer-list-detail {
+      margin: 12px 0 14px;
+    }
+
+    .beer-list {
+      display: grid;
+      gap: 8px;
+      max-height: 460px;
+      overflow: auto;
+      padding-right: 2px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .beer-list-header,
+    .beer-list-row {
+      display: grid;
+      grid-template-columns: 56px minmax(0, 1.7fr) minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 8px;
+      align-items: center;
+    }
+
+    .beer-list-header {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: #fff8ed;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .beer-list-row {
+      width: 100%;
+      padding: 10px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      box-shadow: none;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .beer-list-row span,
+    .beer-list-header span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .beer-list-row.active {
+      border-color: var(--accent);
+      background: #fff7ed;
+    }
+
+    .beer-list-row.liked span:first-child::after {
+      content: " ❤️";
+      font-size: 10px;
+    }
+
     .persona {
       padding: 18px;
       border-radius: 24px;
@@ -347,6 +423,13 @@
 
       <h2 class="section-title">おいしかったビール</h2>
       <div id="homeRanking" class="ranking"></div>
+
+      <div class="beer-master">
+        <h2 class="section-title">玄人向け：全ビールリスト</h2>
+        <p class="question-help beer-list-help">id / name / brewery / style を一覧できます。気になる行をタップすると詳細カードを表示します。</p>
+        <div id="beerListDetail" class="beer-list-detail hidden"></div>
+        <div id="allBeerList" class="beer-list"></div>
+      </div>
     </section>
 
     <section id="quiz" class="card hidden">
@@ -1635,7 +1718,9 @@
       questionHelp: document.getElementById("questionHelp"),
       choices: document.getElementById("choices"),
       resultBody: document.getElementById("resultBody"),
-      homeRanking: document.getElementById("homeRanking")
+      homeRanking: document.getElementById("homeRanking"),
+      allBeerList: document.getElementById("allBeerList"),
+      beerListDetail: document.getElementById("beerListDetail")
     };
 
     document.querySelectorAll("[data-start]").forEach(button => {
@@ -1859,6 +1944,24 @@
       `;
     }
 
+    function masterBeerCard(beer) {
+      const liked = hasLiked(beer.id) ? "liked" : "";
+      return `
+        <article class="beer">
+          <div class="rank">${beer.id} / 全ビールリスト</div>
+          <h3>${beer.name}</h3>
+          <div class="meta">${beer.brewery} / ${beer.style}</div>
+          <p class="copy">${beer.catch}</p>
+          <p class="reason">${beer.description}</p>
+          <div class="tags">${beer.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
+          <p class="reason"><strong>次に飲むなら：</strong>${nextNames[beer.next] || "店員さんに近い味を聞いてみよう"}</p>
+          <div class="beer-actions">
+            <button class="secondary like ${liked}" data-like="${beer.id}">❤️ おいしかった <span>${likeCount(beer.id)}</span></button>
+          </div>
+        </article>
+      `;
+    }
+
     function getDiagnosisLabel() {
       const votedType = topKey(state.typeVotes);
       if (votedType && diagnosisProfiles[votedType]) {
@@ -1949,6 +2052,14 @@
 
           const rankingElement = el.resultBody.querySelector(".ranking");
           if (rankingElement) rankingElement.innerHTML = likedBeersHtml();
+
+          if (el.homeRanking) {
+            el.homeRanking.innerHTML = likedBeersHtml();
+          }
+
+          document.querySelectorAll(`[data-open-beer="${beerId}"]`).forEach(row => {
+            row.classList.toggle("liked", hasLiked(beerId));
+          });
         });
       });
     }
@@ -1980,15 +2091,73 @@
       el.homeRanking.innerHTML = likedBeersHtml();
     }
 
+    function renderAllBeerList(activeBeerId = null) {
+      if (!el.allBeerList) return;
+
+      const sortedBeers = [...beers].sort((a, b) => {
+        const breweryCompare = a.brewery.localeCompare(b.brewery, "ja");
+        if (breweryCompare !== 0) return breweryCompare;
+        return a.name.localeCompare(b.name, "ja");
+      });
+
+      el.allBeerList.innerHTML = `
+        <div class="beer-list-header" aria-hidden="true">
+          <span>id</span>
+          <span>name</span>
+          <span>brewery</span>
+          <span>style</span>
+        </div>
+        ${sortedBeers.map(beer => `
+          <button type="button" class="beer-list-row ${hasLiked(beer.id) ? "liked" : ""} ${beer.id === activeBeerId ? "active" : ""}" data-open-beer="${beer.id}">
+            <span>${beer.id}</span>
+            <span>${beer.name}</span>
+            <span>${beer.brewery}</span>
+            <span>${beer.style}</span>
+          </button>
+        `).join("")}
+      `;
+
+      bindBeerListRows();
+    }
+
+    function bindBeerListRows() {
+      document.querySelectorAll("[data-open-beer]").forEach(row => {
+        row.addEventListener("click", () => showMasterBeerCard(row.dataset.openBeer));
+      });
+    }
+
+    function showMasterBeerCard(beerId) {
+      const beer = beers.find(item => item.id === beerId);
+      if (!beer || !el.beerListDetail) return;
+
+      el.beerListDetail.classList.remove("hidden");
+      el.beerListDetail.innerHTML = masterBeerCard(beer);
+      document.querySelectorAll("[data-open-beer]").forEach(row => {
+        row.classList.toggle("active", row.dataset.openBeer === beerId);
+      });
+
+      trackEvent("beer_master_card_open", {
+        beer_id: beer.id,
+        beer_name: beer.name,
+        beer_brewery: beer.brewery,
+        beer_style: beer.style
+      });
+
+      bindLikeButtons();
+      el.beerListDetail.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
     function showHome() {
       el.quiz.classList.add("hidden");
       el.result.classList.add("hidden");
       el.home.classList.remove("hidden");
       renderHomeRanking();
+      renderAllBeerList();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     renderHomeRanking();
+    renderAllBeerList();
   </script>
 </body>
 </html>
