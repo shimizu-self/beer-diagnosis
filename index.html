@@ -1719,10 +1719,80 @@
     }
 
     function recommendedBeers() {
-      return beers
+      const scored = beers
         .map(beer => ({ ...beer, score: scoreBeer(beer) }))
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 3);
+        .sort((a, b) => {
+          if (b.score !== a.score) return b.score - a.score;
+          if (b.adventure !== a.adventure) return b.adventure - a.adventure;
+          return a.name.localeCompare(b.name, "ja");
+        });
+
+      const poolSize = Math.min(10, scored.length);
+      const pool = scored.slice(0, poolSize);
+
+      const selected = [];
+
+      // 1. 本命：一番スコアが高いビール
+      const main = scored[0];
+      if (main) {
+        selected.push({ ...main, recommendationRole: "本命" });
+      }
+
+      // 2. 近いけど違う方向：本命とスタイルが違い、スコアも近いビール
+      const differentStyle = pool.find(beer =>
+        beer.id !== main?.id &&
+        beer.style !== main?.style
+      ) || scored.find(beer =>
+        beer.id !== main?.id &&
+        beer.style !== main?.style
+      );
+
+      if (differentStyle) {
+        selected.push({ ...differentStyle, recommendationRole: "近いけど違う方向" });
+      }
+
+      // 3. 冒険枠：候補プールの中から adventure 高め or 変化球タグ寄りのビール
+      const adventurous = pool
+        .filter(beer => !selected.some(item => item.id === beer.id))
+        .sort((a, b) => {
+          const aBonus = adventureBonus(a);
+          const bBonus = adventureBonus(b);
+          if (bBonus !== aBonus) return bBonus - aBonus;
+          if (b.adventure !== a.adventure) return b.adventure - a.adventure;
+          return b.score - a.score;
+        })[0] || scored.find(beer => !selected.some(item => item.id === beer.id));
+
+      if (adventurous) {
+        selected.push({ ...adventurous, recommendationRole: "冒険枠" });
+      }
+
+      // 念のため3件未満の場合はスコア順で補完
+      scored.forEach(beer => {
+        if (selected.length >= 3) return;
+        if (!selected.some(item => item.id === beer.id)) {
+          selected.push({ ...beer, recommendationRole: "おすすめ" });
+        }
+      });
+
+      return selected.slice(0, 3);
+    }
+
+    function adventureBonus(beer) {
+      const tags = Array.isArray(beer.tags) ? beer.tags.join(";") : String(beer.tags || "");
+      const scene = Array.isArray(beer.scene) ? beer.scene.join(";") : String(beer.scene || "");
+      let bonus = beer.adventure * 3;
+
+      if (/変化球|個性派|甘酸っぱい|フルーティ|ワイン派|高アルコール|ホップ強め|上級者|沼入口|ちょい冒険|ヘイジー|ジューシー/i.test(tags)) {
+        bonus += 8;
+      }
+      if (/Fruit|Sour|Triple|Strong|Farmhouse|NEIPA|Hazy/i.test(beer.style)) {
+        bonus += 6;
+      }
+      if (/party|slow/.test(scene)) {
+        bonus += 2;
+      }
+
+      return bonus;
     }
 
     function showResult() {
@@ -1737,7 +1807,7 @@
       el.result.classList.remove("hidden");
       el.barFill.style.width = "100%";
 
-      renderBeerResults("あなたにおすすめの3杯", "診断結果をもとに、今日の一杯候補を選びました。気になったものから飲んでみてください。", diagnosis);
+      renderBeerResults("あなたにおすすめの3杯", "本命・近いけど違う方向・冒険枠の3つの役割で、今日の一杯候補を選びました。気になったものから飲んでみてください。", diagnosis);
     }
 
     function renderBeerResults(title, intro = "診断結果をもとに、今日の一杯候補を選びました。気になったものから飲んでみてください。", diagnosis = getDiagnosisLabel()) {
@@ -1775,7 +1845,7 @@
       const liked = hasLiked(beer.id) ? "liked" : "";
       return `
         <article class="beer">
-          <div class="rank">No.${index + 1} ${index === 0 ? "今日の本命" : index === 1 ? "次点" : "冒険枠"}</div>
+          <div class="rank">No.${index + 1} ${beer.recommendationRole || (index === 0 ? "本命" : index === 1 ? "近いけど違う方向" : "冒険枠")}</div>
           <h3>${beer.name}</h3>
           <div class="meta">${beer.brewery} / ${beer.style}</div>
           <p class="copy">${beer.catch}</p>
