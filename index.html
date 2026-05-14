@@ -226,6 +226,23 @@
       letter-spacing: -0.03em;
     }
 
+    .beer.sold-out {
+      opacity: 0.68;
+      background: #fafafa;
+    }
+
+    .sold-out-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      color: #374151;
+      font-size: 12px;
+      font-weight: 900;
+      margin-left: 6px;
+    }
+
     .meta {
       margin: 4px 0 10px;
       color: var(--muted);
@@ -375,6 +392,18 @@
     .beer-list-row.active {
       border-color: var(--accent);
       background: #fff7ed;
+    }
+
+    .beer-list-row.sold-out {
+      opacity: 0.55;
+      background: #f3f4f6;
+    }
+
+    .beer-list-row.sold-out span:nth-child(2)::after {
+      content: " 売切";
+      color: #6b7280;
+      font-size: 10px;
+      font-weight: 900;
     }
 
     .beer-list-row.liked span:first-child::after {
@@ -1804,7 +1833,13 @@
     }
 
     function recommendedBeers() {
-      const scored = beers
+      const availableBeers = beers.filter(beer => !beer.soldOut);
+
+      if (availableBeers.length === 0) {
+        return [];
+      }
+
+      const scored = availableBeers
         .map(beer => ({ ...beer, score: scoreBeer(beer) }))
         .sort((a, b) => {
           if (b.score !== a.score) return b.score - a.score;
@@ -1918,7 +1953,7 @@
           <p>${diagnosis.body}</p>
         </div>
         <div class="results">
-          ${items.map((beer, index) => beerCard(beer, index)).join("")}
+          ${items.length ? items.map((beer, index) => beerCard(beer, index)).join("") : `<article class="beer"><h3>おすすめできるビールがありません</h3><p class="reason">すべて売り切れ設定になっています。ビール定義の <strong>soldOut</strong> を確認してください。</p></article>`}
         </div>
         <h2 class="section-title">おいしかったビール</h2>
         <div class="ranking">${likedBeersHtml()}</div>
@@ -1928,9 +1963,10 @@
 
     function beerCard(beer, index) {
       const liked = hasLiked(beer.id) ? "liked" : "";
+      const soldOutBadge = beer.soldOut ? `<span class="sold-out-badge">売り切れ</span>` : "";
       return `
-        <article class="beer">
-          <div class="rank">No.${index + 1} ${beer.recommendationRole || (index === 0 ? "本命" : index === 1 ? "近いけど違う方向" : "冒険枠")}</div>
+        <article class="beer ${beer.soldOut ? "sold-out" : ""}">
+          <div class="rank">No.${index + 1} ${beer.recommendationRole || (index === 0 ? "本命" : index === 1 ? "近いけど違う方向" : "冒険枠")}${soldOutBadge}</div>
           <h3>${beer.name}</h3>
           <div class="meta">${beer.brewery} / ${beer.style}</div>
           <p class="copy">${beer.catch}</p>
@@ -1938,17 +1974,24 @@
           <div class="tags">${beer.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
           <p class="reason"><strong>次に飲むなら：</strong>${nextNames[beer.next] || "店員さんに近い味を聞いてみよう"}</p>
           <div class="beer-actions">
-            <button class="secondary like ${liked}" data-like="${beer.id}">❤️ おいしかった <span>${likeCount(beer.id)}</span></button>
+            ${beer.soldOut
+              ? `<button class="secondary" disabled>売り切れ</button>`
+              : `<button class="secondary like ${liked}" data-like="${beer.id}">❤️ おいしかった <span>${likeCount(beer.id)}</span></button>`}
           </div>
         </article>
       `;
     }
 
+    function displayBeerId(id) {
+      return String(id || "").replace(/^beer_/, "");
+    }
+
     function masterBeerCard(beer) {
       const liked = hasLiked(beer.id) ? "liked" : "";
+      const soldOutBadge = beer.soldOut ? `<span class="sold-out-badge">売り切れ</span>` : "";
       return `
-        <article class="beer">
-          <div class="rank">${beer.id} / 全ビールリスト</div>
+        <article class="beer ${beer.soldOut ? "sold-out" : ""}">
+          <div class="rank">${displayBeerId(beer.id)} / 全ビールリスト ${soldOutBadge}</div>
           <h3>${beer.name}</h3>
           <div class="meta">${beer.brewery} / ${beer.style}</div>
           <p class="copy">${beer.catch}</p>
@@ -1956,7 +1999,9 @@
           <div class="tags">${beer.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
           <p class="reason"><strong>次に飲むなら：</strong>${nextNames[beer.next] || "店員さんに近い味を聞いてみよう"}</p>
           <div class="beer-actions">
-            <button class="secondary like ${liked}" data-like="${beer.id}">❤️ おいしかった <span>${likeCount(beer.id)}</span></button>
+            ${beer.soldOut
+              ? `<button class="secondary" disabled>売り切れ</button>`
+              : `<button class="secondary like ${liked}" data-like="${beer.id}">❤️ おいしかった <span>${likeCount(beer.id)}</span></button>`}
           </div>
         </article>
       `;
@@ -2017,6 +2062,7 @@
         button.addEventListener("click", () => {
           const beerId = button.dataset.like;
           const beer = beers.find(item => item.id === beerId);
+          if (beer?.soldOut) return;
           const willLike = !hasLiked(beerId);
 
           trackEvent("beer_like_click", {
@@ -2095,9 +2141,9 @@
       if (!el.allBeerList) return;
 
       const sortedBeers = [...beers].sort((a, b) => {
-        const breweryCompare = a.brewery.localeCompare(b.brewery, "ja");
-        if (breweryCompare !== 0) return breweryCompare;
-        return a.name.localeCompare(b.name, "ja");
+        const aNumber = Number(String(a.id).replace("beer_", ""));
+        const bNumber = Number(String(b.id).replace("beer_", ""));
+        return aNumber - bNumber;
       });
 
       el.allBeerList.innerHTML = `
@@ -2108,8 +2154,8 @@
           <span>style</span>
         </div>
         ${sortedBeers.map(beer => `
-          <button type="button" class="beer-list-row ${hasLiked(beer.id) ? "liked" : ""} ${beer.id === activeBeerId ? "active" : ""}" data-open-beer="${beer.id}">
-            <span>${beer.id}</span>
+          <button type="button" class="beer-list-row ${hasLiked(beer.id) ? "liked" : ""} ${beer.soldOut ? "sold-out" : ""} ${beer.id === activeBeerId ? "active" : ""}" data-open-beer="${beer.id}">
+            <span>${displayBeerId(beer.id)}</span>
             <span>${beer.name}</span>
             <span>${beer.brewery}</span>
             <span>${beer.style}</span>
@@ -2140,7 +2186,8 @@
         beer_id: beer.id,
         beer_name: beer.name,
         beer_brewery: beer.brewery,
-        beer_style: beer.style
+        beer_style: beer.style,
+        sold_out: beer.soldOut ? "true" : "false"
       });
 
       bindLikeButtons();
