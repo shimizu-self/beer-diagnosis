@@ -387,6 +387,45 @@
       });
     }
 
+    const GAS_ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbxLZFGw_-BHc3vFCVVmQu_RYqKyNK8Kf99TrZo_l9Dt6l3WGlViU1sPO2God59nbIKbrA/exec";
+
+    function getSessionId() {
+      const key = "beer_diagnosis_session_id";
+      let sessionId = localStorage.getItem(key);
+
+      if (!sessionId) {
+        sessionId = crypto.randomUUID
+          ? crypto.randomUUID()
+          : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+        localStorage.setItem(key, sessionId);
+      }
+
+      return sessionId;
+    }
+
+    function sendLikeToSheet(beer, quizType) {
+      if (!GAS_ENDPOINT_URL || !beer) return;
+
+      fetch(GAS_ENDPOINT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({
+          event_type: "beer_delicious_click",
+          beer_id: beer.id,
+          beer_name: beer.name,
+          beer_style: beer.style,
+          beer_brewery: beer.brewery,
+          quiz_type: quizType || "",
+          session_id: getSessionId()
+        })
+      }).catch(error => {
+        console.warn("Failed to send like to sheet", error);
+      });
+    }
+
     const beers = [
       {
         id: "beer_001",
@@ -892,10 +931,22 @@
               beer_brewery: beer?.brewery || "",
               beer_style: beer?.style || ""
             });
+
+            if (beer) {
+              sendLikeToSheet(beer, state.mode);
+            }
           }
 
           toggleLike(beerId);
-          showResult();
+
+          // いいね後は結果画面全体を再描画しない。
+          // showResult() を呼ぶと beer_card_view が再発火するため、ボタンとランキングだけ更新する。
+          button.classList.toggle("liked", hasLiked(beerId));
+          const countElement = button.querySelector("span");
+          if (countElement) countElement.textContent = likeCount(beerId);
+
+          const rankingElement = el.resultBody.querySelector(".ranking");
+          if (rankingElement) rankingElement.innerHTML = rankingHtml();
         });
       });
     }
