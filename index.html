@@ -378,6 +378,15 @@
   </main>
 
   <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function trackEvent(eventName, params = {}) {
+      window.dataLayer.push({
+        event: eventName,
+        ...params
+      });
+    }
+
     const beers = [
       {
         id: "beer_001",
@@ -663,6 +672,10 @@
     document.getElementById("backHome").addEventListener("click", showHome);
 
     function startQuiz(mode) {
+      trackEvent("quiz_start", {
+        quiz_type: mode
+      });
+
       state.mode = mode;
       state.index = 0;
       state.scores = { bitterness: 0, sweetness: 0, sourness: 0, aroma: 0, body: 0, adventure: 0 };
@@ -695,6 +708,12 @@
     }
 
     function choose(answer) {
+      trackEvent("quiz_answer", {
+        quiz_type: state.mode,
+        question_number: state.index + 1,
+        answer_label: answer.label
+      });
+
       if (answer.weights) {
         Object.entries(answer.weights).forEach(([key, value]) => {
           state.scores[key] += value;
@@ -733,6 +752,10 @@
     }
 
     function showResult() {
+      trackEvent("quiz_complete", {
+        quiz_type: state.mode
+      });
+
       el.quiz.classList.add("hidden");
       el.result.classList.remove("hidden");
       el.barFill.style.width = "100%";
@@ -752,6 +775,18 @@
 
     function renderBeerResults(title, intro = "診断結果をもとに、今日の一杯候補を選びました。気になったものから飲んでみてください。") {
       const items = recommendedBeers();
+
+      items.forEach((beer, index) => {
+        trackEvent("beer_card_view", {
+          quiz_type: state.mode,
+          recommendation_rank: index + 1,
+          beer_id: beer.id,
+          beer_name: beer.name,
+          beer_brewery: beer.brewery,
+          beer_style: beer.style
+        });
+      });
+
       el.resultBody.innerHTML = `
         <h2 class="question-title">${title}</h2>
         <p class="question-help">${intro}</p>
@@ -836,7 +871,30 @@
     function bindLikeButtons() {
       document.querySelectorAll("[data-like]").forEach(button => {
         button.addEventListener("click", () => {
-          toggleLike(button.dataset.like);
+          const beerId = button.dataset.like;
+          const beer = beers.find(item => item.id === beerId);
+          const willLike = !hasLiked(beerId);
+
+          trackEvent("beer_like_click", {
+            action: willLike ? "like" : "unlike",
+            quiz_type: state.mode,
+            beer_id: beerId,
+            beer_name: beer?.name || "",
+            beer_brewery: beer?.brewery || "",
+            beer_style: beer?.style || ""
+          });
+
+          if (willLike) {
+            trackEvent("beer_delicious_click", {
+              quiz_type: state.mode,
+              beer_id: beerId,
+              beer_name: beer?.name || "",
+              beer_brewery: beer?.brewery || "",
+              beer_style: beer?.style || ""
+            });
+          }
+
+          toggleLike(beerId);
           showResult();
         });
       });
