@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>クラフトビール診断</title>
+  <style>
+    :root {
+      --bg: #fff8ed;
+      --card: #ffffff;
+      --text: #2c1f16;
+      --muted: #7a6658;
+      --accent: #f59e0b;
+      --accent-dark: #b45309;
+      --line: #f0d7aa;
+      --good: #16a34a;
+      --danger: #dc2626;
+      --shadow: 0 18px 50px rgba(75, 47, 12, 0.14);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(245, 158, 11, 0.26), transparent 32%),
+        radial-gradient(circle at 90% 15%, rgba(251, 191, 36, 0.22), transparent 30%),
+        var(--bg);
+    }
+
+    .app {
+      width: min(100%, 520px);
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    header {
+      padding: 18px 4px 14px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--accent-dark);
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    h1 {
+      margin: 14px 0 8px;
+      font-size: clamp(28px, 8vw, 40px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .lead {
+      margin: 0 auto;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(240, 215, 170, 0.9);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      backdrop-filter: blur(12px);
+    }
+
+    .home-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+      box-shadow: 0 10px 24px rgba(245, 158, 11, 0.25);
+    }
+
+    button:active { transform: scale(0.98); }
+    button.secondary {
+      background: #fff;
+      color: var(--text);
+      border: 1px solid var(--line);
+      box-shadow: none;
+    }
+    button.ghost {
+      background: transparent;
+      color: var(--accent-dark);
+      border: 1px dashed var(--line);
+      box-shadow: none;
+    }
+
+    .mode-card {
+      display: grid;
+      gap: 6px;
+      padding: 16px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      text-align: left;
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    .mode-card strong { font-size: 16px; }
+    .mode-card span { color: var(--muted); line-height: 1.5; font-weight: 500; }
+
+    .progress {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .bar {
+      height: 8px;
+      width: 100%;
+      background: #f7ead5;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .bar > div {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #facc15);
+      width: 0%;
+      transition: width 0.24s ease;
+    }
+
+    .question-title {
+      font-size: 24px;
+      line-height: 1.25;
+      letter-spacing: -0.03em;
+      margin: 0 0 8px;
+    }
+
+    .question-help {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .choices {
+      display: grid;
+      gap: 10px;
+    }
+
+    .choice {
+      width: 100%;
+      text-align: left;
+      background: #fff;
+      color: var(--text);
+      border: 1px solid var(--line);
+      box-shadow: none;
+      display: grid;
+      gap: 3px;
+    }
+
+    .choice small {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .results {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .beer {
+      padding: 16px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+    }
+
+    .rank {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #fff7ed;
+      color: var(--accent-dark);
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .beer h3 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+
+    .meta {
+      margin: 4px 0 10px;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .copy {
+      margin: 0 0 10px;
+      font-weight: 900;
+      color: var(--accent-dark);
+    }
+
+    .reason {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 12px 0;
+    }
+
+    .tag {
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #fef3c7;
+      color: #92400e;
+      font-weight: 800;
+      font-size: 11px;
+    }
+
+    .beer-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .beer-actions button {
+      flex: 1;
+      padding: 11px 12px;
+      font-size: 13px;
+    }
+
+    .like.liked {
+      background: #fee2e2;
+      color: var(--danger);
+      border-color: #fecaca;
+    }
+
+    .section-title {
+      margin: 24px 0 10px;
+      font-size: 18px;
+    }
+
+    .ranking {
+      display: grid;
+      gap: 8px;
+    }
+
+    .ranking-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.72);
+      font-weight: 800;
+    }
+
+    .ranking-row span:last-child {
+      color: var(--accent-dark);
+      white-space: nowrap;
+    }
+
+    .persona {
+      padding: 18px;
+      border-radius: 24px;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .persona h2 { margin: 0 0 6px; }
+    .persona p { color: var(--muted); line-height: 1.7; margin: 0; }
+
+    .footer-actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <div class="eyebrow">🍺 社内クラフトビール懇親会</div>
+      <h1>今のあなたに合う一杯、診断します</h1>
+      <p class="lead">5問以内でサクッと診断。苦味が苦手でも大丈夫。会話のきっかけになる“推しビール”を見つけよう。</p>
+    </header>
+
+    <section id="home" class="card">
+      <div class="home-grid">
+        <button class="mode-card" data-start="taste">
+          <strong>🍻 ビール診断</strong>
+          <span>味の好みから、おすすめビールを3件レコメンド</span>
+        </button>
+        <button class="mode-card" data-start="brewery">
+          <strong>🏭 推しブルワリー診断</strong>
+          <span>あなたに刺さりそうなブルワリータイプを診断</span>
+        </button>
+        <button class="mode-card" data-start="scene">
+          <strong>🎉 冒険度・シーン診断</strong>
+          <span>今日は安定？冒険？懇親会での飲み方を提案</span>
+        </button>
+      </div>
+
+      <h2 class="section-title">今日の人気</h2>
+      <div id="homeRanking" class="ranking"></div>
+    </section>
+
+    <section id="quiz" class="card hidden">
+      <div class="progress">
+        <span id="quizMode">診断</span>
+        <span id="quizCount">1 / 5</span>
+      </div>
+      <div class="bar"><div id="barFill"></div></div>
+      <h2 id="questionTitle" class="question-title"></h2>
+      <p id="questionHelp" class="question-help"></p>
+      <div id="choices" class="choices"></div>
+    </section>
+
+    <section id="result" class="card hidden">
+      <div id="resultBody"></div>
+      <div class="footer-actions">
+        <button id="restart">もう一回診断する</button>
+        <button id="backHome" class="secondary">トップに戻る</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const beers = [
+      {
+        id: "beer_001",
+        name: "ゆるふわ Hazy IPA",
+        brewery: "Hacobu Brewing Lab",
+        style: "Hazy IPA",
+        catch: "マンゴー香る、沼入口の一杯",
+        bitterness: 2,
+        sweetness: 3,
+        sourness: 1,
+        aroma: 5,
+        body: 3,
+        adventure: 4,
+        scene: ["first", "party"],
+        tags: ["トロピカル", "初心者OK", "香り重視"],
+        description: "苦味は控えめで、香りの華やかさが主役。IPAが怖い人にもすすめやすいタイプです。",
+        next: "west_coast_ipa"
+      },
+      {
+        id: "beer_002",
+        name: "夕暮れ Belgian White",
+        brewery: "Kohaku Beer Works",
+        style: "Belgian White",
+        catch: "迷ったらこれ。軽やかで会話が進む",
+        bitterness: 1,
+        sweetness: 2,
+        sourness: 2,
+        aroma: 3,
+        body: 2,
+        adventure: 2,
+        scene: ["first", "food"],
+        tags: ["爽やか", "軽い", "食中酒"],
+        description: "オレンジピールのようなやさしい香り。ビール初心者や最初の一杯にぴったりです。",
+        next: "saison"
+      },
+      {
+        id: "beer_003",
+        name: "どっしり Porter",
+        brewery: "Night Shift Brewery",
+        style: "Porter",
+        catch: "黒ビール＝苦い、のイメージが変わる",
+        bitterness: 2,
+        sweetness: 4,
+        sourness: 1,
+        aroma: 3,
+        body: 5,
+        adventure: 3,
+        scene: ["slow"],
+        tags: ["ロースト", "濃いめ", "しっぽり"],
+        description: "チョコやコーヒーのような香ばしさ。ゆっくり話したい時間に合います。",
+        next: "barley_wine"
+      },
+      {
+        id: "beer_004",
+        name: "きゅん Sour Ale",
+        brewery: "Wild Pop Brewing",
+        style: "Sour Ale",
+        catch: "甘酸っぱくて、ビールっぽくない驚き",
+        bitterness: 1,
+        sweetness: 3,
+        sourness: 5,
+        aroma: 4,
+        body: 2,
+        adventure: 5,
+        scene: ["party"],
+        tags: ["甘酸っぱい", "変化球", "ワイン派にも"],
+        description: "酸味とフルーツ感が主役。ワインやカクテルが好きな人にも刺さりやすい一杯です。",
+        next: "farmhouse"
+      },
+      {
+        id: "beer_005",
+        name: "王道 West Coast IPA",
+        brewery: "Hop Head Garage",
+        style: "West Coast IPA",
+        catch: "苦味上等。ホップジャンキーへの入口",
+        bitterness: 5,
+        sweetness: 1,
+        sourness: 1,
+        aroma: 5,
+        body: 3,
+        adventure: 4,
+        scene: ["party"],
+        tags: ["苦い", "柑橘", "上級者人気"],
+        description: "グレープフルーツのような香りとキレのある苦味。クラフトビールらしさを感じたい人へ。",
+        next: "double_ipa"
+      },
+      {
+        id: "beer_006",
+        name: "ごはんに合う Saison",
+        brewery: "Table Beer Studio",
+        style: "Saison",
+        catch: "食事しながら、ずっと飲める名脇役",
+        bitterness: 2,
+        sweetness: 1,
+        sourness: 2,
+        aroma: 4,
+        body: 2,
+        adventure: 3,
+        scene: ["food", "first"],
+        tags: ["食中酒", "スパイシー", "軽快"],
+        description: "ドライで香りがよく、料理の邪魔をしません。飲み疲れしにくいタイプです。",
+        next: "belgian_white"
+      }
+    ];
+
+    const nextNames = {
+      west_coast_ipa: "王道 West Coast IPA",
+      saison: "ごはんに合う Saison",
+      barley_wine: "濃厚 Barley Wine",
+      farmhouse: "Farmhouse Ale",
+      double_ipa: "Double IPA",
+      belgian_white: "夕暮れ Belgian White"
+    };
+
+    const quizzes = {
+      taste: {
+        title: "ビール診断",
+        questions: [
+          {
+            title: "苦いビール、どれくらいいける？",
+            help: "IPAの苦味が好きかどうかに近い質問です。",
+            answers: [
+              { label: "苦いのはちょっと苦手", hint: "やさしい一杯から入りたい", weights: { bitterness: -3 } },
+              { label: "ほどほどならOK", hint: "バランス重視", weights: { bitterness: 1 } },
+              { label: "むしろ苦いの好き", hint: "IPA方面も歓迎", weights: { bitterness: 4, aroma: 1 } }
+            ]
+          },
+          {
+            title: "甘酸っぱい味は好き？",
+            help: "フルーツ、ワイン、カクテルが好きな人はここで反応しやすいです。",
+            answers: [
+              { label: "好き。ビールっぽくなくてもOK", hint: "サワー系と相性よし", weights: { sourness: 4, sweetness: 2, adventure: 1 } },
+              { label: "少しならアリ", hint: "爽やか系がよさそう", weights: { sourness: 1, sweetness: 1 } },
+              { label: "酸っぱいのは避けたい", hint: "モルト感や香り重視へ", weights: { sourness: -3, body: 1 } }
+            ]
+          },
+          {
+            title: "香りが強いお酒は好き？",
+            help: "トロピカル、柑橘、スパイスなどの香りの強さです。",
+            answers: [
+              { label: "華やかな香りが好き", hint: "香り重視のビールへ", weights: { aroma: 4 } },
+              { label: "自然な香りなら好き", hint: "バランス型", weights: { aroma: 2 } },
+              { label: "香りは控えめがいい", hint: "軽め・食中酒寄り", weights: { aroma: -2 } }
+            ]
+          },
+          {
+            title: "重め・濃いめの味は好き？",
+            help: "黒ビール、コーヒー、チョコ、赤ワインが好きなら重めもあり。",
+            answers: [
+              { label: "軽いほうがいい", hint: "最初の一杯向き", weights: { body: -3 } },
+              { label: "中くらいが安心", hint: "飲みやすさ重視", weights: { body: 1 } },
+              { label: "濃いの歓迎", hint: "しっぽり系も候補", weights: { body: 4, sweetness: 1 } }
+            ]
+          },
+          {
+            title: "今日はどれくらい冒険したい？",
+            help: "診断精度より、懇親会で盛り上がる一杯を選ぶ質問です。",
+            answers: [
+              { label: "安定の一杯がいい", hint: "迷ったらこれ系", weights: { adventure: -2 } },
+              { label: "ちょい冒険したい", hint: "沼入口へ", weights: { adventure: 2 } },
+              { label: "変化球、大歓迎", hint: "会話ネタ優先", weights: { adventure: 5, sourness: 1 } }
+            ]
+          }
+        ]
+      },
+      brewery: {
+        title: "推しブルワリー診断",
+        questions: [
+          {
+            title: "惹かれる言葉は？",
+            help: "ビールの味というより、ブルワリーの思想に近い質問です。",
+            answers: [
+              { label: "実験・限定・変化球", hint: "毎回違うものを試したい", type: "実験系" },
+              { label: "伝統・職人・丁寧", hint: "信頼できる定番が好き", type: "職人系" },
+              { label: "地域・人・ストーリー", hint: "背景まで楽しみたい", type: "ローカル密着" }
+            ]
+          },
+          {
+            title: "懇親会で話題にしたいのは？",
+            help: "会話のきっかけになりそうな方向性を選んでください。",
+            answers: [
+              { label: "ラベルやネーミング", hint: "見た目から盛り上がる", type: "実験系" },
+              { label: "造り方やこだわり", hint: "職人技に惹かれる", type: "職人系" },
+              { label: "料理との合わせ方", hint: "食中酒として楽しむ", type: "食中酒特化" }
+            ]
+          },
+          {
+            title: "推し方として近いのは？",
+            help: "今日のあなたのブルワリー人格を決めます。",
+            answers: [
+              { label: "尖ってるほど好き", hint: "人に語りたくなる", type: "ホップジャンキー系" },
+              { label: "毎回安心して飲みたい", hint: "定番を信頼する", type: "職人系" },
+              { label: "ごはんと一緒に楽しみたい", hint: "料理も主役", type: "食中酒特化" }
+            ]
+          }
+        ]
+      },
+      scene: {
+        title: "冒険度・シーン診断",
+        questions: [
+          {
+            title: "今日の気分に近いのは？",
+            help: "味がわからなくても、シーンから選べます。",
+            answers: [
+              { label: "最初の一杯を外したくない", hint: "安心スタート", scene: "first", mood: "安定志向" },
+              { label: "料理と一緒に楽しみたい", hint: "食中酒重視", scene: "food", mood: "食中酒" },
+              { label: "会話が盛り上がるやつ", hint: "ネタになる一杯", scene: "party", mood: "盛り上がりたい" }
+            ]
+          },
+          {
+            title: "飲むペースは？",
+            help: "ゆっくり濃いめか、軽快にいくかを見ます。",
+            answers: [
+              { label: "軽くサクサク", hint: "飲みやすさ優先", weights: { body: -2, adventure: -1 } },
+              { label: "普通に楽しむ", hint: "バランス型", weights: { body: 1 } },
+              { label: "ゆっくり語りたい", hint: "濃いめも候補", weights: { body: 4 }, scene: "slow" }
+            ]
+          },
+          {
+            title: "最後に、冒険度は？",
+            help: "アキネーター風の決め質問です。",
+            answers: [
+              { label: "安定志向", hint: "間違いないやつ", weights: { adventure: -2 } },
+              { label: "ちょい冒険", hint: "新しい扉を開く", weights: { adventure: 2 } },
+              { label: "変態歓迎", hint: "尖った一杯もOK", weights: { adventure: 5 } }
+            ]
+          }
+        ]
+      }
+    };
+
+    const breweryProfiles = {
+      "実験系": {
+        title: "実験系ブルワリー推し",
+        body: "あなたは限定醸造や変化球にワクワクするタイプ。味だけでなく、ラベル・名前・ストーリーで場を盛り上げられます。"
+      },
+      "職人系": {
+        title: "職人系ブルワリー推し",
+        body: "あなたは派手さより完成度に惹かれるタイプ。丁寧に造られた定番や、何杯でも飲めるバランス型が似合います。"
+      },
+      "食中酒特化": {
+        title: "食中酒特化ブルワリー推し",
+        body: "あなたはビール単体より、料理や会話と一緒に楽しむタイプ。ドライで飲み疲れしないビールと相性抜群です。"
+      },
+      "ローカル密着": {
+        title: "ローカル密着ブルワリー推し",
+        body: "あなたは造り手や地域のストーリーまで楽しめるタイプ。背景を知るほど一杯がおいしくなります。"
+      },
+      "ホップジャンキー系": {
+        title: "ホップジャンキー系ブルワリー推し",
+        body: "あなたは香りと苦味にテンションが上がるタイプ。IPAを飲み比べると、今日の会話の中心になれるかも。"
+      }
+    };
+
+    const state = {
+      mode: null,
+      index: 0,
+      scores: { bitterness: 0, sweetness: 0, sourness: 0, aroma: 0, body: 0, adventure: 0 },
+      typeVotes: {},
+      sceneVotes: {},
+      moodVotes: {}
+    };
+
+    const el = {
+      home: document.getElementById("home"),
+      quiz: document.getElementById("quiz"),
+      result: document.getElementById("result"),
+      quizMode: document.getElementById("quizMode"),
+      quizCount: document.getElementById("quizCount"),
+      barFill: document.getElementById("barFill"),
+      questionTitle: document.getElementById("questionTitle"),
+      questionHelp: document.getElementById("questionHelp"),
+      choices: document.getElementById("choices"),
+      resultBody: document.getElementById("resultBody"),
+      homeRanking: document.getElementById("homeRanking")
+    };
+
+    document.querySelectorAll("[data-start]").forEach(button => {
+      button.addEventListener("click", () => startQuiz(button.dataset.start));
+    });
+
+    document.getElementById("restart").addEventListener("click", () => startQuiz(state.mode || "taste"));
+    document.getElementById("backHome").addEventListener("click", showHome);
+
+    function startQuiz(mode) {
+      state.mode = mode;
+      state.index = 0;
+      state.scores = { bitterness: 0, sweetness: 0, sourness: 0, aroma: 0, body: 0, adventure: 0 };
+      state.typeVotes = {};
+      state.sceneVotes = {};
+      state.moodVotes = {};
+      el.home.classList.add("hidden");
+      el.result.classList.add("hidden");
+      el.quiz.classList.remove("hidden");
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const quiz = quizzes[state.mode];
+      const question = quiz.questions[state.index];
+      el.quizMode.textContent = quiz.title;
+      el.quizCount.textContent = `${state.index + 1} / ${quiz.questions.length}`;
+      el.barFill.style.width = `${(state.index / quiz.questions.length) * 100}%`;
+      el.questionTitle.textContent = question.title;
+      el.questionHelp.textContent = question.help;
+      el.choices.innerHTML = "";
+
+      question.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.className = "choice";
+        button.innerHTML = `<strong>${answer.label}</strong><small>${answer.hint || ""}</small>`;
+        button.addEventListener("click", () => choose(answer));
+        el.choices.appendChild(button);
+      });
+    }
+
+    function choose(answer) {
+      if (answer.weights) {
+        Object.entries(answer.weights).forEach(([key, value]) => {
+          state.scores[key] += value;
+        });
+      }
+      if (answer.type) state.typeVotes[answer.type] = (state.typeVotes[answer.type] || 0) + 1;
+      if (answer.scene) state.sceneVotes[answer.scene] = (state.sceneVotes[answer.scene] || 0) + 1;
+      if (answer.mood) state.moodVotes[answer.mood] = (state.moodVotes[answer.mood] || 0) + 1;
+
+      const quiz = quizzes[state.mode];
+      state.index += 1;
+      if (state.index >= quiz.questions.length) {
+        showResult();
+      } else {
+        renderQuestion();
+      }
+    }
+
+    function scoreBeer(beer) {
+      const attributes = ["bitterness", "sweetness", "sourness", "aroma", "body", "adventure"];
+      let score = 0;
+      attributes.forEach(attr => {
+        score += beer[attr] * state.scores[attr];
+      });
+      Object.entries(state.sceneVotes).forEach(([scene, votes]) => {
+        if (beer.scene.includes(scene)) score += votes * 8;
+      });
+      return score;
+    }
+
+    function recommendedBeers() {
+      return beers
+        .map(beer => ({ ...beer, score: scoreBeer(beer) }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3);
+    }
+
+    function showResult() {
+      el.quiz.classList.add("hidden");
+      el.result.classList.remove("hidden");
+      el.barFill.style.width = "100%";
+
+      if (state.mode === "brewery") {
+        renderBreweryResult();
+        return;
+      }
+
+      if (state.mode === "scene") {
+        renderSceneResult();
+        return;
+      }
+
+      renderBeerResults("あなたにおすすめの3杯");
+    }
+
+    function renderBeerResults(title, intro = "診断結果をもとに、今日の一杯候補を選びました。気になったものから飲んでみてください。") {
+      const items = recommendedBeers();
+      el.resultBody.innerHTML = `
+        <h2 class="question-title">${title}</h2>
+        <p class="question-help">${intro}</p>
+        <div class="results">
+          ${items.map((beer, index) => beerCard(beer, index)).join("")}
+        </div>
+        <h2 class="section-title">今日の人気ランキング</h2>
+        <div class="ranking">${rankingHtml()}</div>
+      `;
+      bindLikeButtons();
+    }
+
+    function beerCard(beer, index) {
+      const liked = hasLiked(beer.id) ? "liked" : "";
+      return `
+        <article class="beer">
+          <div class="rank">No.${index + 1} ${index === 0 ? "今日の本命" : index === 1 ? "次点" : "冒険枠"}</div>
+          <h3>${beer.name}</h3>
+          <div class="meta">${beer.brewery} / ${beer.style}</div>
+          <p class="copy">${beer.catch}</p>
+          <p class="reason">${beer.description}</p>
+          <div class="tags">${beer.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
+          <p class="reason"><strong>次に飲むなら：</strong>${nextNames[beer.next] || "店員さんに近い味を聞いてみよう"}</p>
+          <div class="beer-actions">
+            <button class="secondary like ${liked}" data-like="${beer.id}">❤️ おいしかった <span>${likeCount(beer.id)}</span></button>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderBreweryResult() {
+      const type = topKey(state.typeVotes) || "職人系";
+      const profile = breweryProfiles[type];
+      renderBeerResults(
+        profile.title,
+        `${profile.body} まずは下の3杯から、近い世界観のものを選んでみてください。`
+      );
+    }
+
+    function renderSceneResult() {
+      const mood = topKey(state.moodVotes) || "ちょい冒険";
+      renderBeerResults(
+        `今日は「${mood}」タイプ`,
+        "味の知識がなくても大丈夫。今日のシーンに合わせて、会話が生まれやすい3杯を選びました。"
+      );
+    }
+
+    function topKey(obj) {
+      return Object.entries(obj).sort((a, b) => b[1] - a[1])[0]?.[0];
+    }
+
+    function likeStore() {
+      return JSON.parse(localStorage.getItem("beer_likes") || "{}");
+    }
+
+    function likedStore() {
+      return JSON.parse(localStorage.getItem("beer_liked_by_me") || "[]");
+    }
+
+    function likeCount(id) {
+      return likeStore()[id] || 0;
+    }
+
+    function hasLiked(id) {
+      return likedStore().includes(id);
+    }
+
+    function toggleLike(id) {
+      const likes = likeStore();
+      const liked = new Set(likedStore());
+      if (liked.has(id)) {
+        liked.delete(id);
+        likes[id] = Math.max(0, (likes[id] || 0) - 1);
+      } else {
+        liked.add(id);
+        likes[id] = (likes[id] || 0) + 1;
+      }
+      localStorage.setItem("beer_likes", JSON.stringify(likes));
+      localStorage.setItem("beer_liked_by_me", JSON.stringify([...liked]));
+    }
+
+    function bindLikeButtons() {
+      document.querySelectorAll("[data-like]").forEach(button => {
+        button.addEventListener("click", () => {
+          toggleLike(button.dataset.like);
+          showResult();
+        });
+      });
+    }
+
+    function rankingHtml() {
+      const likes = likeStore();
+      const ranked = [...beers]
+        .sort((a, b) => (likes[b.id] || 0) - (likes[a.id] || 0))
+        .slice(0, 5);
+      return ranked.map((beer, index) => `
+        <div class="ranking-row">
+          <span>${index + 1}. ${beer.name}</span>
+          <span>${likes[beer.id] || 0} いいね</span>
+        </div>
+      `).join("");
+    }
+
+    function renderHomeRanking() {
+      el.homeRanking.innerHTML = rankingHtml();
+    }
+
+    function showHome() {
+      el.quiz.classList.add("hidden");
+      el.result.classList.add("hidden");
+      el.home.classList.remove("hidden");
+      renderHomeRanking();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    renderHomeRanking();
+  </script>
+</body>
+</html>
