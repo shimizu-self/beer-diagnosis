@@ -466,9 +466,6 @@
         </button>
       </div>
 
-      <h2 class="section-title">おいしかったビール</h2>
-      <div id="homeRanking" class="ranking"></div>
-
       <div class="beer-master">
         <h2 class="section-title">全ビールリスト</h2>
         <p class="question-help beer-list-help">id / name / brewery / style を一覧できます。気になる行をタップすると詳細カードを表示します。</p>
@@ -548,1108 +545,1154 @@
 
     const beers = [
           {
-                "id": "beer_001",
-                "name": "NORA",
-                "brewery": "Brasserie Knot",
-                "style": "Farmhouse Ale",
-                "catch": "やさしい個性で、知らない味に出会う一杯",
-                "bitterness": 2,
-                "sweetness": 2,
-                "sourness": 2,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 4,
-                "scene": [
-                      "food",
-                      "party"
-                ],
-                "tags": [
-                      "個性派",
-                      "香り",
-                      "ちょい冒険"
-                ],
-                "description": "北海道産の古代小麦とライ麦を加えてできたIPAです。枇杷やバゲットをイメージさせる香りにちょっぴりスパイシーで豊潤なくちあたり。ドライな後味が飲みやすさを高めています。香りや余韻に個性があり、少し冒険したい人の会話のきっかけになるタイプ。",
-                "next": "beer_012"
+                    "id": "beer_001",
+                    "soldOut": false,
+                    "name": "NORA",
+                    "brewery": "Brasserie Knot(北海道)",
+                    "style": "RYE IPA",
+                    "catch": "ライ麦香るドライなIPA",
+                    "bitterness": 2,
+                    "sweetness": 2,
+                    "sourness": 2,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 4,
+                    "scene": [
+                              "food",
+                              "party"
+                    ],
+                    "tags": [
+                              "個性派",
+                              "香り",
+                              "ちょい冒険"
+                    ],
+                    "description": "北海道産の古代小麦とライ麦を加えてできたIPAです。枇杷やバゲットをイメージさせる香りにちょっぴりスパイシーで豊潤なくちあたり。ドライな後味が飲みやすさを高めています。",
+                    "next": "beer_012"
           },
           {
-                "id": "beer_002",
-                "name": "TIP",
-                "brewery": "Brasserie Knot",
-                "style": "IPA",
-                "catch": "香りと苦味でクラフト感を楽しむ王道",
-                "bitterness": 5,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "party"
-                ],
-                "tags": [
-                      "ホップ",
-                      "苦味",
-                      "クラフト定番"
-                ],
-                "description": "柑橘やホップの香り、しっかりした苦味を楽しみたい人に向いた一杯。",
-                "next": "beer_009"
+                    "id": "beer_002",
+                    "soldOut": false,
+                    "name": "TIP",
+                    "brewery": "Brasserie Knot(北海道)",
+                    "style": "IPA",
+                    "catch": "トロピカル香る爽快IPA",
+                    "bitterness": 5,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "party"
+                    ],
+                    "tags": [
+                              "ホップ",
+                              "苦味",
+                              "クラフト定番"
+                    ],
+                    "description": "ニュージーランド産ホップの華やかなトロピカルアロマを、あえてシンプルなレシピで引き立てたクリーンなIPA。透明感を感じさせる味わいの中に、ストーンフルーツやパイナップル、ピーチを思わせる香りが瑞々しく立ち昇ります。",
+                    "next": "beer_009"
           },
           {
-                "id": "beer_003",
-                "name": "Buddha's Hands",
-                "brewery": "DD4D",
-                "style": "Fruit Ale",
-                "catch": "果実感で会話が弾む、ビールの変化球",
-                "bitterness": 2,
-                "sweetness": 3,
-                "sourness": 3,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 4,
-                "scene": [
-                      "party",
-                      "first"
-                ],
-                "tags": [
-                      "フルーティ",
-                      "甘酸っぱい",
-                      "ワイン派にも"
-                ],
-                "description": "果実由来の香りや酸味が楽しめる、ビールらしさに縛られない一杯。",
-                "next": "beer_015"
+                    "id": "beer_003",
+                    "soldOut": false,
+                    "name": "Buddha's Hands",
+                    "brewery": "DD4D(愛媛)",
+                    "style": "Hazy IPA",
+                    "catch": "果実感で会話が弾む、ビールの変化球",
+                    "bitterness": 2,
+                    "sweetness": 3,
+                    "sourness": 3,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 4,
+                    "scene": [
+                              "party",
+                              "first"
+                    ],
+                    "tags": [
+                              "フルーティ",
+                              "甘酸っぱい",
+                              "ワイン派にも"
+                    ],
+                    "description": "可愛いエイリアンの様な不思議なフォルムで独特な甘く深い香りを放つ愛媛県産高級柑橘「仏手柑」を使用したHazy IPA。ニューイングランド酵母、オーツ、ラクトースによるクリーミーで優しい口当たり、柑橘系ホップ（Citra/Cascade）と仏手柑の甘い香りが最高にマッチしております。フルーティーでジューシー、苦味が少なく飲みやすいです。",
+                    "next": "beer_015"
           },
           {
-                "id": "beer_004",
-                "name": "My Secret Lemon Trees 3",
-                "brewery": "DD4D",
-                "style": "Fruit Ale",
-                "catch": "果実感で会話が弾む、ビールの変化球",
-                "bitterness": 2,
-                "sweetness": 3,
-                "sourness": 3,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 4,
-                "scene": [
-                      "party",
-                      "first"
-                ],
-                "tags": [
-                      "フルーティ",
-                      "甘酸っぱい",
-                      "ワイン派にも"
-                ],
-                "description": "果実由来の香りや酸味が楽しめる、ビールらしさに縛られない一杯。",
-                "next": "beer_015"
+                    "id": "beer_004",
+                    "soldOut": false,
+                    "name": "My Secret Lemon Trees 3",
+                    "brewery": "DD4D(愛媛)",
+                    "style": "Citrus Hazy DIPA",
+                    "catch": "レモン香るジューシーIPA",
+                    "bitterness": 2,
+                    "sweetness": 3,
+                    "sourness": 3,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 4,
+                    "scene": [
+                              "party",
+                              "first"
+                    ],
+                    "tags": [
+                              "フルーティ",
+                              "甘酸っぱい",
+                              "ワイン派にも"
+                    ],
+                    "description": "愛媛県南部に位置する 九島にある秘密の場所。そこで海と空に包まれ、太陽と潮風にあたりじっくりと育ったレモンの香りは甘く爽やか。３種のホップ（Sabro, Citra, Cascade）によるココナッツや柑橘のニュアンスとレモンの香りが相まる華やかなIPA。大麦麦芽、小麦、オーツ麦の甘く香ばしい余韻もお楽しみください。",
+                    "next": "beer_015"
           },
           {
-                "id": "beer_005",
-                "name": "HAZY IPA",
-                "brewery": "ISEKADO",
-                "style": "Hazy IPA",
-                "catch": "ジューシーな香りでIPAの沼入口へ",
-                "bitterness": 3,
-                "sweetness": 3,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "first",
-                      "party"
-                ],
-                "tags": [
-                      "トロピカル",
-                      "香り重視",
-                      "沼入口"
-                ],
-                "description": "トロピカルで華やかな香りが主役。苦味だけでなく香りを楽しみたい人におすすめ。",
-                "next": "beer_007"
+                    "id": "beer_005",
+                    "soldOut": false,
+                    "name": "HAZY IPA",
+                    "brewery": "ISEKADO(三重)",
+                    "style": "Hazy IPA",
+                    "catch": "パッション香る爽やかIPA",
+                    "bitterness": 3,
+                    "sweetness": 3,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "first",
+                              "party"
+                    ],
+                    "tags": [
+                              "トロピカル",
+                              "香り重視",
+                              "沼入口"
+                    ],
+                    "description": "すっきりとしたパッションフルーツのような香りとそれを包む柑橘のドライな香りが爽やかに広がります。小麦のサラッとした口当たりが爽やかで、ホップのしっかりした苦みがミディアムボディを引き締めながら、小麦麦芽のかすかな酸味とともに穏やかな余韻を引き立たせます。",
+                    "next": "beer_007"
           },
           {
-                "id": "beer_006",
-                "name": "ペールエール",
-                "brewery": "ISEKADO",
-                "style": "Pale Ale",
-                "catch": "迷ったらこれ。香りと飲みやすさのバランス型",
-                "bitterness": 3,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 2,
-                "scene": [
-                      "first",
-                      "food",
-                      "party"
-                ],
-                "tags": [
-                      "バランス",
-                      "初心者OK",
-                      "ホップ"
-                ],
-                "description": "ほどよいホップ香と苦味で、クラフトビール初心者にもすすめやすいバランス型。",
-                "next": "beer_017"
+                    "id": "beer_006",
+                    "soldOut": false,
+                    "name": "ペールエール",
+                    "brewery": "ISEKADO(三重)",
+                    "style": "Pale Ale",
+                    "catch": "迷ったらこれ。香りと飲みやすさのバランス型",
+                    "bitterness": 3,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 2,
+                    "scene": [
+                              "first",
+                              "food",
+                              "party"
+                    ],
+                    "tags": [
+                              "バランス",
+                              "初心者OK",
+                              "ホップ"
+                    ],
+                    "description": "フレッシュなグレープフルーツの果汁を思わせる柑橘系の香りが華やかに広がります。ほど良いコクと甘み、クリーンな口当たりが心地よいです。モルトの味わいを穏やかな苦みが優しく包んで引き立て、さっぱりとした飲み応えの余韻を楽しんでいただけます。",
+                    "next": "beer_017"
           },
           {
-                "id": "beer_007",
-                "name": "Flocc Members",
-                "brewery": "Inkhorn",
-                "style": "Hazy IPA",
-                "catch": "ジューシーな香りでIPAの沼入口へ",
-                "bitterness": 3,
-                "sweetness": 3,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "first",
-                      "party"
-                ],
-                "tags": [
-                      "トロピカル",
-                      "香り重視",
-                      "沼入口"
-                ],
-                "description": "トロピカルで華やかな香りが主役。苦味だけでなく香りを楽しみたい人におすすめ。",
-                "next": "beer_005"
+                    "id": "beer_007",
+                    "soldOut": false,
+                    "name": "Flocc Members",
+                    "brewery": "Inkhorn(東京)",
+                    "style": "NEON PILSNER",
+                    "catch": "ネオン香る進化系ラガー",
+                    "bitterness": 3,
+                    "sweetness": 3,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "first",
+                              "party"
+                    ],
+                    "tags": [
+                              "トロピカル",
+                              "香り重視",
+                              "沼入口"
+                    ],
+                    "description": "ドイツやニュージーランド産ホップを加えてできたネオンピルスナーです。ライム、若草、パイナップルをイメージさせる香りにフワッとしたジューシーなくちあたり。斬新な味わいの進化系ラガービールです。",
+                    "next": "beer_005"
           },
           {
-                "id": "beer_008",
-                "name": "Yellow Warbler",
-                "brewery": "Inkhorn",
-                "style": "Hazy IPA",
-                "catch": "ジューシーな香りでIPAの沼入口へ",
-                "bitterness": 3,
-                "sweetness": 3,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "first",
-                      "party"
-                ],
-                "tags": [
-                      "トロピカル",
-                      "香り重視",
-                      "沼入口"
-                ],
-                "description": "トロピカルで華やかな香りが主役。苦味だけでなく香りを楽しみたい人におすすめ。",
-                "next": "beer_005"
+                    "id": "beer_008",
+                    "soldOut": false,
+                    "name": "Yellow Warbler",
+                    "brewery": "Inkhorn(東京)",
+                    "style": "Hazy WIPA",
+                    "catch": "グレフル香る濁りIPA",
+                    "bitterness": 3,
+                    "sweetness": 3,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "first",
+                              "party"
+                    ],
+                    "tags": [
+                              "トロピカル",
+                              "香り重視",
+                              "沼入口"
+                    ],
+                    "description": "グレープフルーツジュースのような香り、フレーバー、苦味が楽しめるHazy Double IPA。瑞々しい飲み口に、温度が上がるとパイナップルやダンクなニュアンスも。シルキーで柔らかく、ほのかな甘さが残る飲みやすい一杯です。",
+                    "next": "beer_005"
           },
           {
-                "id": "beer_009",
-                "name": "Burst IPA",
-                "brewery": "Mikkeller",
-                "style": "IPA",
-                "catch": "香りと苦味でクラフト感を楽しむ王道",
-                "bitterness": 5,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "party"
-                ],
-                "tags": [
-                      "ホップ",
-                      "苦味",
-                      "クラフト定番"
-                ],
-                "description": "柑橘やホップの香り、しっかりした苦味を楽しみたい人に向いた一杯。",
-                "next": "beer_002"
+                    "id": "beer_009",
+                    "soldOut": false,
+                    "name": "Burst IPA",
+                    "brewery": "Mikkeller(デンマーク)",
+                    "style": "IPA",
+                    "catch": "果実弾けるジューシーIPA",
+                    "bitterness": 5,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "party"
+                    ],
+                    "tags": [
+                              "ホップ",
+                              "苦味",
+                              "クラフト定番"
+                    ],
+                    "description": "その名の通りフルーティアロマが弾ける(=バースト)IPA。ややヘイジーなゴールデンカラーから広がるバブルガムのような甘い香り。フレッシュシトラスにパイナップル、マンゴーのジューシーなフレーバー。後味にグレープフルーツの苦みがキリっと残ります。",
+                    "next": "beer_002"
           },
           {
-                "id": "beer_010",
-                "name": "Hop Shop Hazy IPA",
-                "brewery": "Mikkeller",
-                "style": "Hazy IPA",
-                "catch": "ジューシーな香りでIPAの沼入口へ",
-                "bitterness": 3,
-                "sweetness": 3,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "first",
-                      "party"
-                ],
-                "tags": [
-                      "トロピカル",
-                      "香り重視",
-                      "沼入口"
-                ],
-                "description": "トロピカルで華やかな香りが主役。苦味だけでなく香りを楽しみたい人におすすめ。",
-                "next": "beer_005"
+                    "id": "beer_010",
+                    "soldOut": false,
+                    "name": "Hop Shop Hazy IPA",
+                    "brewery": "Mikkeller(デンマーク)",
+                    "style": "Hazy IPA",
+                    "catch": "ジューシーな香りでIPAの沼入口へ",
+                    "bitterness": 3,
+                    "sweetness": 3,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "first",
+                              "party"
+                    ],
+                    "tags": [
+                              "トロピカル",
+                              "香り重視",
+                              "沼入口"
+                    ],
+                    "description": "オーツ麦をたっぷり使ってできたヘイジーIPAです。白桃やパイナップルのような香りに滑らかでミルキーなマウスフィールが魅力。ちょっとだけライトな味わいが飲みやすさを高めています。",
+                    "next": "beer_005"
           },
           {
-                "id": "beer_011",
-                "name": "イヤー オブ ザ ラガー",
-                "brewery": "Mikkeller",
-                "style": "Lager",
-                "catch": "すっきり軽快、乾杯にぴったり",
-                "bitterness": 2,
-                "sweetness": 1,
-                "sourness": 1,
-                "aroma": 2,
-                "body": 1,
-                "adventure": 1,
-                "scene": [
-                      "first",
-                      "party"
-                ],
-                "tags": [
-                      "すっきり",
-                      "乾杯",
-                      "飲みやすい"
-                ],
-                "description": "クリアで軽快な飲み口。最初の一杯やリセットしたいタイミングにおすすめ。",
-                "next": "beer_044"
+                    "id": "beer_011",
+                    "soldOut": false,
+                    "name": "イヤー オブ ザ ラガー",
+                    "brewery": "Mikkeller(デンマーク)",
+                    "style": "Lager",
+                    "catch": "すっきり軽快、乾杯にぴったり",
+                    "bitterness": 2,
+                    "sweetness": 1,
+                    "sourness": 1,
+                    "aroma": 2,
+                    "body": 1,
+                    "adventure": 1,
+                    "scene": [
+                              "first",
+                              "party"
+                    ],
+                    "tags": [
+                              "すっきり",
+                              "乾杯",
+                              "飲みやすい"
+                    ],
+                    "description": "チェコの国営ビール「ブドバー」とのコラボで生まれた本格派ラガー。ブドバー酵母、ドイツ産モルト、チェコ産ザーツホップを使用。透明感あるゴールドに穀物の甘い香り、柔らかなモルティさとグラッシーな苦味が調和する、なめらかな一杯です。",
+                    "next": "beer_044"
           },
           {
-                "id": "beer_012",
-                "name": "Novoru / ノボル",
-                "brewery": "Novoru",
-                "style": "Farmhouse Ale",
-                "catch": "やさしい個性で、知らない味に出会う一杯",
-                "bitterness": 2,
-                "sweetness": 2,
-                "sourness": 2,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 4,
-                "scene": [
-                      "food",
-                      "party"
-                ],
-                "tags": [
-                      "個性派",
-                      "香り",
-                      "ちょい冒険"
-                ],
-                "description": "香りや余韻に個性があり、少し冒険したい人の会話のきっかけになるタイプ。",
-                "next": "beer_001"
+                    "id": "beer_012",
+                    "soldOut": false,
+                    "name": "Novoru / ノボル",
+                    "brewery": "Novoru(宮崎)",
+                    "style": "Session IPA",
+                    "catch": "バランス抜群の定番IPA",
+                    "bitterness": 2,
+                    "sweetness": 2,
+                    "sourness": 2,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 4,
+                    "scene": [
+                              "food",
+                              "party"
+                    ],
+                    "tags": [
+                              "個性派",
+                              "香り",
+                              "ちょい冒険"
+                    ],
+                    "description": "ホップのアロマ、キレのいい苦味、心地よい喉越しの全てのバランスを併せ持つ味わい。シンプルでありながら、一度飲んだら虜になるような、洗練されたインパクトが特徴。Novoru Brewingのフラッグシップ。",
+                    "next": "beer_001"
           },
           {
-                "id": "beer_013",
-                "name": "Nuvoru / ヌボル",
-                "brewery": "Novoru",
-                "style": "Farmhouse Ale",
-                "catch": "やさしい個性で、知らない味に出会う一杯",
-                "bitterness": 2,
-                "sweetness": 2,
-                "sourness": 2,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 4,
-                "scene": [
-                      "food",
-                      "party"
-                ],
-                "tags": [
-                      "個性派",
-                      "香り",
-                      "ちょい冒険"
-                ],
-                "description": "香りや余韻に個性があり、少し冒険したい人の会話のきっかけになるタイプ。",
-                "next": "beer_001"
+                    "id": "beer_013",
+                    "soldOut": false,
+                    "name": "Nuvoru / ヌボル",
+                    "brewery": "Novoru(宮崎)",
+                    "style": "DDH Hazy Pale Ale",
+                    "catch": "みずみずしく香るペールエール",
+                    "bitterness": 2,
+                    "sweetness": 2,
+                    "sourness": 2,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 4,
+                    "scene": [
+                              "food",
+                              "party"
+                    ],
+                    "tags": [
+                              "個性派",
+                              "香り",
+                              "ちょい冒険"
+                    ],
+                    "description": "NUVOホップを贅沢に使ったペールエール。収穫後24時間以内に瞬間冷凍した生に近いホップをドライホップで使用し、メロンや夏みかんの果実のようなみずみずしい香りを表現。Deep cutカスケードも重ねることで、青さや雑味を抑えつつ、上品さと華やかさを両立した一杯です。余韻までじわっと長く続きますよね。",
+                    "next": "beer_001"
           },
           {
-                "id": "beer_014",
-                "name": "Warau / ワラウ",
-                "brewery": "Novoru",
-                "style": "Farmhouse Ale",
-                "catch": "やさしい個性で、知らない味に出会う一杯",
-                "bitterness": 2,
-                "sweetness": 2,
-                "sourness": 2,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 4,
-                "scene": [
-                      "food",
-                      "party"
-                ],
-                "tags": [
-                      "個性派",
-                      "香り",
-                      "ちょい冒険"
-                ],
-                "description": "香りや余韻に個性があり、少し冒険したい人の会話のきっかけになるタイプ。",
-                "next": "beer_001"
+                    "id": "beer_014",
+                    "soldOut": false,
+                    "name": "Warau / ワラウ",
+                    "brewery": "Novoru(宮崎)",
+                    "style": "West Coast IPA",
+                    "catch": "柑橘香る軽快West Coast",
+                    "bitterness": 2,
+                    "sweetness": 2,
+                    "sourness": 2,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 4,
+                    "scene": [
+                              "food",
+                              "party"
+                    ],
+                    "tags": [
+                              "個性派",
+                              "香り",
+                              "ちょい冒険"
+                    ],
+                    "description": "香りや余韻に個性があり、少し冒険したい人の会話のきっかけになるタイプ。MosaicとCitraホップが織りなす、鮮やかな柑橘とトロピカルフルーツのアロマ。クリアなボディとシャープな苦味が絶妙に調和し、飲むたびに心を軽やかにするWest Coast IPA。",
+                    "next": "beer_001"
           },
           {
-                "id": "beer_015",
-                "name": "ねこシャンRose",
-                "brewery": "VECTOR",
-                "style": "Fruit Ale",
-                "catch": "果実感で会話が弾む、ビールの変化球",
-                "bitterness": 2,
-                "sweetness": 3,
-                "sourness": 3,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 4,
-                "scene": [
-                      "party",
-                      "first"
-                ],
-                "tags": [
-                      "フルーティ",
-                      "甘酸っぱい",
-                      "ワイン派にも"
-                ],
-                "description": "果実由来の香りや酸味が楽しめる、ビールらしさに縛られない一杯。",
-                "next": "beer_003"
+                    "id": "beer_015",
+                    "soldOut": false,
+                    "name": "ねこシャンRose",
+                    "brewery": "VECTOR(東京)",
+                    "style": "Special Ale",
+                    "catch": "ロゼ色の軽やか泡ビール",
+                    "bitterness": 2,
+                    "sweetness": 3,
+                    "sourness": 3,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 4,
+                    "scene": [
+                              "party",
+                              "first"
+                    ],
+                    "tags": [
+                              "フルーティ",
+                              "甘酸っぱい",
+                              "ワイン派にも"
+                    ],
+                    "description": "ワイン酵母をつかった特別なビール。シュワっと軽やかな泡が特徴的。ロゼワインのように華やかなピンク色は、国産のビーツをつかい色を表現しています。ねこぱんちシリーズの特徴”猫ぱんちのようなカワイイ苦味”も感じられる軽やかな喉越しをお楽しみください。",
+                    "next": "beer_003"
           },
           {
-                "id": "beer_016",
-                "name": "グラマラスIPA",
-                "brewery": "VECTOR",
-                "style": "IPA",
-                "catch": "香りと苦味でクラフト感を楽しむ王道",
-                "bitterness": 5,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "party"
-                ],
-                "tags": [
-                      "ホップ",
-                      "苦味",
-                      "クラフト定番"
-                ],
-                "description": "柑橘やホップの香り、しっかりした苦味を楽しみたい人に向いた一杯。",
-                "next": "beer_002"
+                    "id": "beer_016",
+                    "soldOut": false,
+                    "name": "グラマラスIPA",
+                    "brewery": "VECTOR(東京)",
+                    "style": "Hazy IPA",
+                    "catch": "濃厚トロピカルな大人IPA",
+                    "bitterness": 5,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "party"
+                    ],
+                    "tags": [
+                              "ホップ",
+                              "苦味",
+                              "クラフト定番"
+                    ],
+                    "description": "グラマラスな味わいのHazyIPA‼ホップを贅沢につかうことでトロピカルな味わいを醸しています。その味わいはムチムチでまさにグラマラス。ハイアルコールならではのトロっとした飲み口はロマンあふれる魅惑な大人のビールです♪",
+                    "next": "beer_002"
           },
           {
-                "id": "beer_017",
-                "name": "ベクター ペールエール",
-                "brewery": "VECTOR",
-                "style": "Pale Ale",
-                "catch": "迷ったらこれ。香りと飲みやすさのバランス型",
-                "bitterness": 3,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 2,
-                "scene": [
-                      "first",
-                      "food",
-                      "party"
-                ],
-                "tags": [
-                      "バランス",
-                      "初心者OK",
-                      "ホップ"
-                ],
-                "description": "ほどよいホップ香と苦味で、クラフトビール初心者にもすすめやすいバランス型。",
-                "next": "beer_006"
+                    "id": "beer_017",
+                    "soldOut": false,
+                    "name": "ベクター ペールエール",
+                    "brewery": "VECTOR(東京)",
+                    "style": "American Pale Ale",
+                    "catch": "迷ったらこれ。香りと飲みやすさのバランス型",
+                    "bitterness": 3,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 2,
+                    "scene": [
+                              "first",
+                              "food",
+                              "party"
+                    ],
+                    "tags": [
+                              "バランス",
+                              "初心者OK",
+                              "ホップ"
+                    ],
+                    "description": "ほどよいホップ香と苦味で、クラフトビール初心者にもすすめやすいバランス型。",
+                    "next": "beer_006"
           },
           {
-                "id": "beer_018",
-                "name": "Casimiroa NEIPA",
-                "brewery": "VERTERE",
-                "style": "NEIPA",
-                "catch": "濁り系のジューシーなホップアロマ",
-                "bitterness": 3,
-                "sweetness": 3,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "first",
-                      "party"
-                ],
-                "tags": [
-                      "ジューシー",
-                      "ヘイジー",
-                      "香り重視"
-                ],
-                "description": "濁り系らしい柔らかな口当たりと、果実を思わせるホップアロマを楽しむタイプ。",
-                "next": "beer_005"
+                    "id": "beer_018",
+                    "soldOut": false,
+                    "name": "Casimiroa NEIPA",
+                    "brewery": "VERTERE(東京)",
+                    "style": "NE IPA",
+                    "catch": "ピーチ香るジューシーIPA",
+                    "bitterness": 3,
+                    "sweetness": 3,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "first",
+                              "party"
+                    ],
+                    "tags": [
+                              "ジューシー",
+                              "ヘイジー",
+                              "香り重視"
+                    ],
+                    "description": "ピーチ、ぶどう、パイナップル、シトラスの多彩なアロマ。オーツ由来のシルキーな口当たりと乳糖由来の厚みのあるボディ。口の中で弾けるホップのフレーバー。ミックスフルーツを思わせるジューシーなIPA。",
+                    "next": "beer_005"
           },
           {
-                "id": "beer_019",
-                "name": "Blazing Buds",
-                "brewery": "WCB",
-                "style": "IPA",
-                "catch": "香りと苦味でクラフト感を楽しむ王道",
-                "bitterness": 5,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "party"
-                ],
-                "tags": [
-                      "ホップ",
-                      "苦味",
-                      "クラフト定番"
-                ],
-                "description": "柑橘やホップの香り、しっかりした苦味を楽しみたい人に向いた一杯。",
-                "next": "beer_002"
+                    "id": "beer_019",
+                    "soldOut": false,
+                    "name": "Blazing Buds",
+                    "brewery": "WCB(静岡)",
+                    "style": "Amber IPA",
+                    "catch": "甘く香ばしい、やさしい琥珀ビール",
+                    "bitterness": 5,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "party"
+                    ],
+                    "tags": [
+                              "ホップ",
+                              "苦味",
+                              "クラフト定番"
+                    ],
+                    "description": "リッチなトフィーのような甘さに、香り高いブラウンシュガーとキャラメルの融合。ほのかなウッディさや草の香りの印象も。さらにオレンジを思わせる明るい柑橘系のアロマと、フルーティーなエッセンスが混ざり合い、カンタロープの繊細なタッチが際立つ味わいに。",
+                    "next": "beer_002"
           },
           {
-                "id": "beer_020",
-                "name": "Personal Best",
-                "brewery": "WCB",
-                "style": "IPA",
-                "catch": "香りと苦味でクラフト感を楽しむ王道",
-                "bitterness": 5,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "party"
-                ],
-                "tags": [
-                      "ホップ",
-                      "苦味",
-                      "クラフト定番"
-                ],
-                "description": "柑橘やホップの香り、しっかりした苦味を楽しみたい人に向いた一杯。",
-                "next": "beer_002"
+                    "id": "beer_020",
+                    "soldOut": false,
+                    "name": "Personal Best",
+                    "brewery": "WCB(静岡)",
+                    "style": "Italian Pils",
+                    "catch": "レモン香る、軽やか爽快ビール",
+                    "bitterness": 5,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "party"
+                    ],
+                    "tags": [
+                              "ホップ",
+                              "苦味",
+                              "クラフト定番"
+                    ],
+                    "description": "レモンとライムを思わせる、清々しく華やかな香り。さらにはレモングラスを連想させるハーブやフローラルなニュアンスと、はちみつのような優しい甘み。軽やかでドリンカブルな味わいは、一息つくリフレッシュタイムに最適。",
+                    "next": "beer_002"
           },
           {
-                "id": "beer_021",
-                "name": "Piñata Pale Ale",
-                "brewery": "WCB",
-                "style": "Pale Ale",
-                "catch": "迷ったらこれ。香りと飲みやすさのバランス型",
-                "bitterness": 3,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 2,
-                "scene": [
-                      "first",
-                      "food",
-                      "party"
-                ],
-                "tags": [
-                      "バランス",
-                      "初心者OK",
-                      "ホップ"
-                ],
-                "description": "ほどよいホップ香と苦味で、クラフトビール初心者にもすすめやすいバランス型。",
-                "next": "beer_006"
+                    "id": "beer_021",
+                    "soldOut": false,
+                    "name": "Piñata Pale Ale",
+                    "brewery": "WCB(静岡)",
+                    "style": "Pale Ale",
+                    "catch": "柑橘とライチ香るペールエール",
+                    "bitterness": 3,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 2,
+                    "scene": [
+                              "first",
+                              "food",
+                              "party"
+                    ],
+                    "tags": [
+                              "バランス",
+                              "初心者OK",
+                              "ホップ"
+                    ],
+                    "description": "グレープフルーツやライムを思わせる、明るく爽やかな柑橘アロマ。甘いレイヤーが重なるように、ベリーやライチのエキゾチックなニュアンス。グラッシーでウッディな印象に、ゼラニウムのようなフローラルで柔らかなアクセントも。深く染み渡るダンクな余韻でフィニッシュ。",
+                    "next": "beer_006"
           },
           {
-                "id": "beer_022",
-                "name": "Slow Motion",
-                "brewery": "WCB",
-                "style": "Hazy IPA",
-                "catch": "ジューシーな香りでIPAの沼入口へ",
-                "bitterness": 3,
-                "sweetness": 3,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "first",
-                      "party"
-                ],
-                "tags": [
-                      "トロピカル",
-                      "香り重視",
-                      "沼入口"
-                ],
-                "description": "トロピカルで華やかな香りが主役。苦味だけでなく香りを楽しみたい人におすすめ。",
-                "next": "beer_005"
+                    "id": "beer_022",
+                    "soldOut": false,
+                    "name": "Slow Motion",
+                    "brewery": "WCB(静岡)",
+                    "style": "Hazy IPA",
+                    "catch": "パイン香る夢心地Hazy",
+                    "bitterness": 3,
+                    "sweetness": 3,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "first",
+                              "party"
+                    ],
+                    "tags": [
+                              "トロピカル",
+                              "香り重視",
+                              "沼入口"
+                    ],
+                    "description": "明るい印象をともなう、El Doradoホップ由来のパイナップルのようなトロピカル感。さらにグレープルーツやレモンを思わせる爽やかな香りが続き、メロンなど核果類の甘いニュアンス。優しく香るグラッシーで穏やかな苦みを添えて、ドリンカビリティあふれる飲み口に夢心地。",
+                    "next": "beer_005"
           },
           {
-                "id": "beer_023",
-                "name": "IPA",
-                "brewery": "いわて蔵ビール",
-                "style": "IPA",
-                "catch": "香りと苦味でクラフト感を楽しむ王道",
-                "bitterness": 5,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "party"
-                ],
-                "tags": [
-                      "ホップ",
-                      "苦味",
-                      "クラフト定番"
-                ],
-                "description": "柑橘やホップの香り、しっかりした苦味を楽しみたい人に向いた一杯。",
-                "next": "beer_002"
+                    "id": "beer_023",
+                    "soldOut": false,
+                    "name": "IPA",
+                    "brewery": "いわて蔵ビール(岩手)",
+                    "style": "IPA",
+                    "catch": "苦味しっかり本格IPA",
+                    "bitterness": 5,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "party"
+                    ],
+                    "tags": [
+                              "ホップ",
+                              "苦味",
+                              "クラフト定番"
+                    ],
+                    "description": "いわて蔵IPAは、通常の4倍にも及ぶホップを使用することによって苦味を強調させており、インパクトのある味わいを楽しむことができます。",
+                    "next": "beer_002"
           },
           {
-                "id": "beer_024",
-                "name": "ペールエール",
-                "brewery": "いわて蔵ビール",
-                "style": "Pale Ale",
-                "catch": "迷ったらこれ。香りと飲みやすさのバランス型",
-                "bitterness": 3,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 2,
-                "scene": [
-                      "first",
-                      "food",
-                      "party"
-                ],
-                "tags": [
-                      "バランス",
-                      "初心者OK",
-                      "ホップ"
-                ],
-                "description": "ほどよいホップ香と苦味で、クラフトビール初心者にもすすめやすいバランス型。",
-                "next": "beer_006"
+                    "id": "beer_024",
+                    "soldOut": false,
+                    "name": "ペールエール",
+                    "brewery": "いわて蔵ビール(岩手)",
+                    "style": "Pale Ale",
+                    "catch": "迷ったらこれ。香りと飲みやすさのバランス型",
+                    "bitterness": 3,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 2,
+                    "scene": [
+                              "first",
+                              "food",
+                              "party"
+                    ],
+                    "tags": [
+                              "バランス",
+                              "初心者OK",
+                              "ホップ"
+                    ],
+                    "description": "英国風。淡色でほのかにフルーティな香りがあるビール。別名ビタービール。ビタリングホップとアロマホップをふんだんに使用し、ホップ由来の香りを楽しめるビールである。2007インターナショナルビアコンペティションいおいて銀賞を受賞した。",
+                    "next": "beer_006"
           },
           {
-                "id": "beer_025",
-                "name": "三陸広田湾牡蠣のスタウト",
-                "brewery": "いわて蔵ビール",
-                "style": "Oyster Stout",
-                "catch": "牡蠣の旨みとロースト感を楽しむ黒ビール",
-                "bitterness": 3,
-                "sweetness": 3,
-                "sourness": 1,
-                "aroma": 3,
-                "body": 5,
-                "adventure": 4,
-                "scene": [
-                      "food",
-                      "slow"
-                ],
-                "tags": [
-                      "牡蠣",
-                      "黒ビール",
-                      "ロースト",
-                      "食中酒"
-                ],
-                "description": "ロースト麦芽の香ばしさに、牡蠣由来の旨みやミネラル感を合わせて楽しむ食中酒寄りのスタウト。",
-                "next": "beer_034"
+                    "id": "beer_025",
+                    "soldOut": false,
+                    "name": "三陸広田湾牡蠣のスタウト",
+                    "brewery": "いわて蔵ビール(岩手)",
+                    "style": "Oyster Stout",
+                    "catch": "牡蠣の旨みとロースト感を楽しむ黒ビール",
+                    "bitterness": 3,
+                    "sweetness": 3,
+                    "sourness": 1,
+                    "aroma": 3,
+                    "body": 5,
+                    "adventure": 4,
+                    "scene": [
+                              "food",
+                              "slow"
+                    ],
+                    "tags": [
+                              "牡蠣",
+                              "黒ビール",
+                              "ロースト",
+                              "食中酒"
+                    ],
+                    "description": "岩手・三陸広田湾産の牡蠣の殻と身を使用したビール。伝統的なアイルランドのビールであるオイスタースタウトをいわて蔵ビールが再現・復活させました。牡蠣の殻は発酵をよくし、身は黒ビールに奥行きを与えます。濃厚ですが、さっぱりとした後味が最高のビールです。",
+                    "next": "beer_034"
           },
           {
-                "id": "beer_026",
-                "name": "BELUGA",
-                "brewery": "ひみつビール",
-                "style": "Farmhouse Ale",
-                "catch": "やさしい個性で、知らない味に出会う一杯",
-                "bitterness": 2,
-                "sweetness": 2,
-                "sourness": 2,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 4,
-                "scene": [
-                      "food",
-                      "party"
-                ],
-                "tags": [
-                      "個性派",
-                      "香り",
-                      "ちょい冒険"
-                ],
-                "description": "香りや余韻に個性があり、少し冒険したい人の会話のきっかけになるタイプ。",
-                "next": "beer_001"
+                    "id": "beer_026",
+                    "soldOut": false,
+                    "name": "BELUGA",
+                    "brewery": "ひみつビール(三重)",
+                    "style": "Rice Double IPA",
+                    "catch": "お米で軽やかホップDIPA",
+                    "bitterness": 2,
+                    "sweetness": 2,
+                    "sourness": 2,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 4,
+                    "scene": [
+                              "food",
+                              "party"
+                    ],
+                    "tags": [
+                              "個性派",
+                              "香り",
+                              "ちょい冒険"
+                    ],
+                    "description": "自家栽培のコシヒカリをたっぷり使ったDIPA。お米由来のクリアでスムースな飲み口に、ライムやパイナップル、スパイシーでパイニーなトロピカルホップ香が弾けます。飲みごたえはしっかりありつつ軽快で、淡麗な酒質がホップを鮮明に引き立てる、食事にも単体にも合う唯一無二の一杯です。ホップ好きにぜひ。",
+                    "next": "beer_001"
           },
           {
-                "id": "beer_027",
-                "name": "ぎゅぎゅっとグレフルIPA",
-                "brewery": "ひみつビール",
-                "style": "Fruit IPA",
-                "catch": "果実感とホップ感で会話が弾む一杯",
-                "bitterness": 4,
-                "sweetness": 3,
-                "sourness": 3,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "party",
-                      "first"
-                ],
-                "tags": [
-                      "フルーティ",
-                      "IPA",
-                      "香り重視"
-                ],
-                "description": "果実を思わせる香りとIPAらしいホップ感を一緒に楽しむ、華やかなタイプ。",
-                "next": "beer_037"
+                    "id": "beer_027",
+                    "soldOut": false,
+                    "name": "ぎゅぎゅっとグレフルIPA",
+                    "brewery": "ひみつビール(三重)",
+                    "style": "IPA",
+                    "catch": "果実感とホップ感で会話が弾む一杯",
+                    "bitterness": 4,
+                    "sweetness": 3,
+                    "sourness": 3,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "party",
+                              "first"
+                    ],
+                    "tags": [
+                              "フルーティ",
+                              "IPA",
+                              "香り重視"
+                    ],
+                    "description": "自家栽培したグレープフルーツを加えてできたIPAです。まるでレモンドロップのような香りにちょっぴり苦みの効いたクリーンなくちあたり。後味はドライで爽快な風味が楽しめます。",
+                    "next": "beer_037"
           },
           {
-                "id": "beer_028",
-                "name": "阿夫利のひみつ",
-                "brewery": "ひみつビール",
-                "style": "Farmhouse Ale",
-                "catch": "やさしい個性で、知らない味に出会う一杯",
-                "bitterness": 2,
-                "sweetness": 2,
-                "sourness": 2,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 4,
-                "scene": [
-                      "food",
-                      "party"
-                ],
-                "tags": [
-                      "個性派",
-                      "香り",
-                      "ちょい冒険"
-                ],
-                "description": "香りや余韻に個性があり、少し冒険したい人の会話のきっかけになるタイプ。",
-                "next": "beer_001"
+                    "id": "beer_028",
+                    "soldOut": false,
+                    "name": "阿夫利のひみつ",
+                    "brewery": "ひみつビール(三重)",
+                    "style": "Yuzu Sansho IPA",
+                    "catch": "柚子と山椒香る爽快IPA",
+                    "bitterness": 2,
+                    "sweetness": 2,
+                    "sourness": 2,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 4,
+                    "scene": [
+                              "food",
+                              "party"
+                    ],
+                    "tags": [
+                              "個性派",
+                              "香り",
+                              "ちょい冒険"
+                    ],
+                    "description": "AFURIと伊勢のひみつビールの協力から生まれた特別な一杯。ふわりと広がる柚子の香りに、カスケードの爽やかさ、柚子ピールのほどよい苦味、朝倉山椒のピリッとしたスパイス感が重なります。軽やかで自然体ながら、飲み進めるほど表情が変わる、奥行きある味わいです。",
+                    "next": "beer_001"
           },
           {
-                "id": "beer_029",
-                "name": "一期一会",
-                "brewery": "京都醸造",
-                "style": "Saison",
-                "catch": "ドライで香る、食事に寄り添う一杯",
-                "bitterness": 2,
-                "sweetness": 1,
-                "sourness": 2,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 3,
-                "scene": [
-                      "food",
-                      "first"
-                ],
-                "tags": [
-                      "食中酒",
-                      "ドライ",
-                      "スパイシー"
-                ],
-                "description": "ドライな飲み口と酵母由来の香りがあり、料理と合わせながら飲み続けやすい。",
-                "next": "beer_038"
+                    "id": "beer_029",
+                    "soldOut": false,
+                    "name": "一期一会",
+                    "brewery": "京都醸造(京都)",
+                    "style": "Saison",
+                    "catch": "ドライで香る、食事に寄り添う一杯",
+                    "bitterness": 2,
+                    "sweetness": 1,
+                    "sourness": 2,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 3,
+                    "scene": [
+                              "food",
+                              "first"
+                    ],
+                    "tags": [
+                              "食中酒",
+                              "ドライ",
+                              "スパイシー"
+                    ],
+                    "description": "ドライな飲み口と酵母由来の香りがあり、料理と合わせながら飲み続けやすい。",
+                    "next": "beer_038"
           },
           {
-                "id": "beer_030",
-                "name": "春の気まぐれ",
-                "brewery": "京都醸造",
-                "style": "IPA",
-                "catch": "香りと苦味でクラフト感を楽しむ王道",
-                "bitterness": 4,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "party"
-                ],
-                "tags": [
-                      "ホップ",
-                      "苦味",
-                      "クラフト定番"
-                ],
-                "description": "柑橘やホップの香り、しっかりした苦味を楽しみたい人に向いた一杯。",
-                "next": "beer_002"
+                    "id": "beer_030",
+                    "soldOut": false,
+                    "name": "春の気まぐれ",
+                    "brewery": "京都醸造(京都)",
+                    "style": "IPA",
+                    "catch": "香りと苦味でクラフト感を楽しむ王道",
+                    "bitterness": 4,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "party"
+                    ],
+                    "tags": [
+                              "ホップ",
+                              "苦味",
+                              "クラフト定番"
+                    ],
+                    "description": "柑橘やホップの香り、しっかりした苦味を楽しみたい人に向いた一杯。",
+                    "next": "beer_002"
           },
           {
-                "id": "beer_031",
-                "name": "週休6日",
-                "brewery": "京都醸造",
-                "style": "Belgian Session IPA",
-                "catch": "軽やかだけど香る、飲み飽きしないIPA",
-                "bitterness": 3,
-                "sweetness": 1,
-                "sourness": 1,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 3,
-                "scene": [
-                      "first",
-                      "party"
-                ],
-                "tags": [
-                      "セッション",
-                      "ドリンカブル",
-                      "ホップ"
-                ],
-                "description": "度数控えめで飲みやすく、ホップの香りも楽しめるセッション寄りのIPA。",
-                "next": "beer_036"
+                    "id": "beer_031",
+                    "soldOut": false,
+                    "name": "週休6日",
+                    "brewery": "京都醸造(京都)",
+                    "style": "Belgian Session IPA",
+                    "catch": "軽やかだけど香る、飲み飽きしないIPA",
+                    "bitterness": 3,
+                    "sweetness": 1,
+                    "sourness": 1,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 3,
+                    "scene": [
+                              "first",
+                              "party"
+                    ],
+                    "tags": [
+                              "セッション",
+                              "ドリンカブル",
+                              "ホップ"
+                    ],
+                    "description": "度数控えめで飲みやすく、ホップの香りも楽しめるセッション寄りのIPA。",
+                    "next": "beer_036"
           },
           {
-                "id": "beer_032",
-                "name": "Beyond the Pacific",
-                "brewery": "伊勢角屋麦酒",
-                "style": "IPA",
-                "catch": "香りと苦味でクラフト感を楽しむ王道",
-                "bitterness": 5,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "party"
-                ],
-                "tags": [
-                      "ホップ",
-                      "苦味",
-                      "クラフト定番"
-                ],
-                "description": "柑橘やホップの香り、しっかりした苦味を楽しみたい人に向いた一杯。",
-                "next": "beer_002"
+                    "id": "beer_032",
+                    "soldOut": false,
+                    "name": "Beyond the Pacific",
+                    "brewery": "伊勢角屋麦酒(三重)",
+                    "style": "Pacific Dry Pilsner",
+                    "catch": "お米でキレる、ホップ香るラガー",
+                    "bitterness": 5,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "party"
+                    ],
+                    "tags": [
+                              "ホップ",
+                              "苦味",
+                              "クラフト定番"
+                    ],
+                    "description": "お米を使用したドライながらも奥行きのあるピルスナーをベースに、アメリカ北西部産のホップ「Strata(ストラータ)」と「Krush(クラッシュ)」の2品種を使用しました。IPAを彷彿とさせる力強いホップキャラクターを持ちながらも、日本人の繊細な味覚に合わせて調整されたクリーンな味わいとキレのあるドライなフィニッシュが特徴です。",
+                    "next": "beer_002"
           },
           {
-                "id": "beer_033",
-                "name": "脳がとろけるウルトラヘヴン3xIPA",
-                "brewery": "伊勢角屋麦酒",
-                "style": "Triple IPA",
-                "catch": "ホップも飲みごたえも強烈なラスボス枠",
-                "bitterness": 5,
-                "sweetness": 3,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 5,
-                "adventure": 5,
-                "scene": [
-                      "party",
-                      "slow"
-                ],
-                "tags": [
-                      "高アルコール感",
-                      "ホップ強め",
-                      "変態向け"
-                ],
-                "description": "強い香りと濃厚な飲みごたえを楽しむ、冒険したい人向けの強力なIPA。",
-                "next": "beer_002"
+                    "id": "beer_033",
+                    "soldOut": false,
+                    "name": "脳がとろけるウルトラヘヴン3xIPA",
+                    "brewery": "伊勢角屋麦酒(三重)",
+                    "style": "Triple IPA",
+                    "catch": "ホップも飲みごたえも強烈なラスボス枠",
+                    "bitterness": 5,
+                    "sweetness": 3,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 5,
+                    "adventure": 5,
+                    "scene": [
+                              "party",
+                              "slow"
+                    ],
+                    "tags": [
+                              "高アルコール感",
+                              "ホップ強め",
+                              "変態向け"
+                    ],
+                    "description": "ドライに仕上げることで10%ものハイアルコールの割に軽めの飲み口を目指しました。炸裂するビター、グリーン&トロピカルなホップ波動と駆け抜けるソリッドなボディがあなたを天国へ誘います。飲みやすさに騙されて脳がとろけて昇天します。",
+                    "next": "beer_002"
           },
           {
-                "id": "beer_034",
-                "name": "IRON BURTON",
-                "brewery": "反射炉ビヤ",
-                "style": "Strong Ale",
-                "catch": "濃くて奥深い、じっくり語るための一杯",
-                "bitterness": 3,
-                "sweetness": 3,
-                "sourness": 1,
-                "aroma": 3,
-                "body": 5,
-                "adventure": 4,
-                "scene": [
-                      "slow"
-                ],
-                "tags": [
-                      "濃いめ",
-                      "モルト",
-                      "しっぽり"
-                ],
-                "description": "モルトの厚みと飲みごたえがあり、ゆっくり味わうシーンに合うタイプ。",
-                "next": "beer_025"
+                    "id": "beer_034",
+                    "soldOut": false,
+                    "name": "IRON BURTON",
+                    "brewery": "反射炉ビヤ(静岡)",
+                    "style": "Burton Ale",
+                    "catch": "香ばしトースト系英国エール",
+                    "bitterness": 3,
+                    "sweetness": 3,
+                    "sourness": 1,
+                    "aroma": 3,
+                    "body": 5,
+                    "adventure": 4,
+                    "scene": [
+                              "slow"
+                    ],
+                    "tags": [
+                              "濃いめ",
+                              "モルト",
+                              "しっぽり"
+                    ],
+                    "description": "英国の伝統的なスタイルでできたバートンエールです。焼き目のついたトーストのような香りに、ちょっぴり甘みのある芳ばしく瑞々しいくちあたり。バートンエールならではのキリッとした風味が楽しめます。",
+                    "next": "beer_025"
           },
           {
-                "id": "beer_035",
-                "name": "お酒マンIPA",
-                "brewery": "反射炉ビヤ",
-                "style": "IPA",
-                "catch": "香りと苦味でクラフト感を楽しむ王道",
-                "bitterness": 5,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "party"
-                ],
-                "tags": [
-                      "ホップ",
-                      "苦味",
-                      "クラフト定番"
-                ],
-                "description": "柑橘やホップの香り、しっかりした苦味を楽しみたい人に向いた一杯。",
-                "next": "beer_002"
+                    "id": "beer_035",
+                    "soldOut": false,
+                    "name": "お酒マンIPA(静岡)",
+                    "brewery": "反射炉ビヤ",
+                    "style": "Belgian IPA",
+                    "catch": "柑橘香るドライなIPA",
+                    "bitterness": 5,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "party"
+                    ],
+                    "tags": [
+                              "ホップ",
+                              "苦味",
+                              "クラフト定番"
+                    ],
+                    "description": "USホップをたっぷり加えてできたベルジャンIPAです。シトラス、グレープフルーツ、オレンジをイメージさせる香りにちょっぴり複雑でドライなくちあたり。ビターな余韻が魅力を高めています。",
+                    "next": "beer_002"
           },
           {
-                "id": "beer_036",
-                "name": "お酒マンLIGHT",
-                "brewery": "反射炉ビヤ",
-                "style": "Session IPA",
-                "catch": "軽めなのにホップ香る、何杯でもいけるIPA",
-                "bitterness": 3,
-                "sweetness": 1,
-                "sourness": 1,
-                "aroma": 4,
-                "body": 1,
-                "adventure": 3,
-                "scene": [
-                      "first",
-                      "party"
-                ],
-                "tags": [
-                      "軽い",
-                      "ホップ",
-                      "セッション"
-                ],
-                "description": "軽い飲み口ながらホップの香りを楽しめる、長く飲み続けやすいタイプ。",
-                "next": "beer_031"
+                    "id": "beer_036",
+                    "soldOut": false,
+                    "name": "お酒マンLIGHT",
+                    "brewery": "反射炉ビヤ(静岡)",
+                    "style": "Saison",
+                    "catch": "軽やか爽快お酒マン",
+                    "bitterness": 3,
+                    "sweetness": 1,
+                    "sourness": 1,
+                    "aroma": 4,
+                    "body": 1,
+                    "adventure": 3,
+                    "scene": [
+                              "first",
+                              "party"
+                    ],
+                    "tags": [
+                              "軽い",
+                              "ホップ",
+                              "セッション"
+                    ],
+                    "description": "あの、お酒マンIPAのライトバージョンです。オレンジ、パッションフルーツを想わせる香りにちょっぴり苦みのある軽やかな味わい。後味はドライで爽快な風味が魅力！",
+                    "next": "beer_031"
           },
           {
-                "id": "beer_037",
-                "name": "だいだいエール",
-                "brewery": "常陸野ネスト",
-                "style": "Fruit IPA",
-                "catch": "果実感とホップ感で会話が弾む一杯",
-                "bitterness": 4,
-                "sweetness": 3,
-                "sourness": 3,
-                "aroma": 5,
-                "body": 3,
-                "adventure": 4,
-                "scene": [
-                      "party",
-                      "first"
-                ],
-                "tags": [
-                      "フルーティ",
-                      "IPA",
-                      "香り重視"
-                ],
-                "description": "果実を思わせる香りとIPAらしいホップ感を一緒に楽しむ、華やかなタイプ。",
-                "next": "beer_027"
+                    "id": "beer_037",
+                    "soldOut": false,
+                    "name": "だいだいエール",
+                    "brewery": "常陸野ネスト(茨城)",
+                    "style": "Fruit IPA",
+                    "catch": "果実感とホップ感で会話が弾む一杯",
+                    "bitterness": 4,
+                    "sweetness": 3,
+                    "sourness": 3,
+                    "aroma": 5,
+                    "body": 3,
+                    "adventure": 4,
+                    "scene": [
+                              "party",
+                              "first"
+                    ],
+                    "tags": [
+                              "フルーティ",
+                              "IPA",
+                              "香り重視"
+                    ],
+                    "description": "茨城県石岡市八郷の「福来ミカン」と、オレンジ風味のホップで醸造した常陸野ネストDAi DAi（橙）エール。柑橘系の爽やかな香り、心地よい苦味と旨味の絶妙なバランスを楽しむことが出来る。",
+                    "next": "beer_027"
           },
           {
-                "id": "beer_038",
-                "name": "セゾン ドゥ ジャポン",
-                "brewery": "常陸野ネスト",
-                "style": "Saison",
-                "catch": "ドライで香る、食事に寄り添う一杯",
-                "bitterness": 2,
-                "sweetness": 1,
-                "sourness": 2,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 3,
-                "scene": [
-                      "food",
-                      "first"
-                ],
-                "tags": [
-                      "食中酒",
-                      "ドライ",
-                      "スパイシー"
-                ],
-                "description": "ドライな飲み口と酵母由来の香りがあり、料理と合わせながら飲み続けやすい。",
-                "next": "beer_029"
+                    "id": "beer_038",
+                    "soldOut": false,
+                    "name": "セゾン ドゥ ジャポン(茨城)",
+                    "brewery": "常陸野ネスト",
+                    "style": "Japanese Saison",
+                    "catch": "ドライで香る、食事に寄り添う一杯",
+                    "bitterness": 2,
+                    "sweetness": 1,
+                    "sourness": 2,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 3,
+                    "scene": [
+                              "food",
+                              "first"
+                    ],
+                    "tags": [
+                              "食中酒",
+                              "ドライ",
+                              "スパイシー"
+                    ],
+                    "description": "日本酒造りに欠かせない米麹を用いて醸造したセゾンビール。米麹の甘味と醗酵による自然の酸味が特徴。香りのアクセントにほんの少しの柚子を使っている。",
+                    "next": "beer_029"
           },
           {
-                "id": "beer_039",
-                "name": "ホワイトエール",
-                "brewery": "常陸野ネスト",
-                "style": "White Ale",
-                "catch": "軽やかで爽やかな、最初の一杯向け",
-                "bitterness": 1,
-                "sweetness": 2,
-                "sourness": 2,
-                "aroma": 3,
-                "body": 2,
-                "adventure": 2,
-                "scene": [
-                      "first",
-                      "food"
-                ],
-                "tags": [
-                      "爽やか",
-                      "小麦",
-                      "初心者OK"
-                ],
-                "description": "小麦系のやわらかな口当たりと爽やかな香りで、ビールが得意でない人にも試しやすい。",
-                "next": "beer_041"
+                    "id": "beer_039",
+                    "soldOut": false,
+                    "name": "ホワイトエール",
+                    "brewery": "常陸野ネスト(茨城)",
+                    "style": "White Ale",
+                    "catch": "軽やかで爽やかな、最初の一杯向け",
+                    "bitterness": 1,
+                    "sweetness": 2,
+                    "sourness": 2,
+                    "aroma": 3,
+                    "body": 2,
+                    "adventure": 2,
+                    "scene": [
+                              "first",
+                              "food"
+                    ],
+                    "tags": [
+                              "爽やか",
+                              "小麦",
+                              "初心者OK"
+                    ],
+                    "description": "小麦麦芽にコリアンダー、オレンジピール、ナツメグなどを加えた、ベルジャンホワイトスタイルのうすにごり小麦ビール。スパイスの豊かな香りと、小麦由来の軽い酸味が心地よく、爽やかで飲みやすい味わいです。さまざまな料理にも合わせやすい一杯です。",
+                    "next": "beer_041"
           },
           {
-                "id": "beer_040",
-                "name": "ペールエール",
-                "brewery": "平和クラフト",
-                "style": "Pale Ale",
-                "catch": "迷ったらこれ。香りと飲みやすさのバランス型",
-                "bitterness": 3,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 2,
-                "scene": [
-                      "first",
-                      "food",
-                      "party"
-                ],
-                "tags": [
-                      "バランス",
-                      "初心者OK",
-                      "ホップ"
-                ],
-                "description": "ほどよいホップ香と苦味で、クラフトビール初心者にもすすめやすいバランス型。",
-                "next": "beer_006"
+                    "id": "beer_040",
+                    "soldOut": false,
+                    "name": "ペールエール",
+                    "brewery": "平和クラフト(和歌山)",
+                    "style": "Pale Ale",
+                    "catch": "迷ったらこれ。香りと飲みやすさのバランス型",
+                    "bitterness": 3,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 2,
+                    "scene": [
+                              "first",
+                              "food",
+                              "party"
+                    ],
+                    "tags": [
+                              "バランス",
+                              "初心者OK",
+                              "ホップ"
+                    ],
+                    "description": "オーソドックスなモルト・ホップ・イーストを用いた王道的なペールエールです。 爽やかなホップの香りもありながら、落ち着いて飲める1杯を目指しました。 お肉料理やアメリカンフードに合わせて、しっかり冷やしてお楽しみください。",
+                    "next": "beer_006"
           },
           {
-                "id": "beer_041",
-                "name": "ホワイトエール",
-                "brewery": "平和クラフト",
-                "style": "White Ale",
-                "catch": "軽やかで爽やかな、最初の一杯向け",
-                "bitterness": 1,
-                "sweetness": 2,
-                "sourness": 2,
-                "aroma": 3,
-                "body": 2,
-                "adventure": 2,
-                "scene": [
-                      "first",
-                      "food"
-                ],
-                "tags": [
-                      "爽やか",
-                      "小麦",
-                      "初心者OK"
-                ],
-                "description": "小麦系のやわらかな口当たりと爽やかな香りで、ビールが得意でない人にも試しやすい。",
-                "next": "beer_039"
+                    "id": "beer_041",
+                    "soldOut": false,
+                    "name": "ホワイトエール",
+                    "brewery": "平和クラフト(和歌山)",
+                    "style": "White Ale",
+                    "catch": "軽やかで爽やかな、最初の一杯向け",
+                    "bitterness": 1,
+                    "sweetness": 2,
+                    "sourness": 2,
+                    "aroma": 3,
+                    "body": 2,
+                    "adventure": 2,
+                    "scene": [
+                              "first",
+                              "food"
+                    ],
+                    "tags": [
+                              "爽やか",
+                              "小麦",
+                              "初心者OK"
+                    ],
+                    "description": "ベースはベルジャン、イーストとホップがアメリカンなウィートエールです。 苦味は少し抑えめで小麦由来の柔らかさがあります。ふわっとオレンジの香りがしてビールが苦手な方にもおすすめ。 隠し味に和歌山県産の柚子ピールも効かせて爽やかな仕上がりになっています｡ お魚料理､野菜料理におすすめです｡",
+                    "next": "beer_039"
           },
           {
-                "id": "beer_042",
-                "name": "AfPA (アフリカペールエール)",
-                "brewery": "志賀高原ビール",
-                "style": "Pale Ale",
-                "catch": "迷ったらこれ。香りと飲みやすさのバランス型",
-                "bitterness": 3,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 2,
-                "scene": [
-                      "first",
-                      "food",
-                      "party"
-                ],
-                "tags": [
-                      "バランス",
-                      "初心者OK",
-                      "ホップ"
-                ],
-                "description": "ほどよいホップ香と苦味で、クラフトビール初心者にもすすめやすいバランス型。",
-                "next": "beer_006"
+                    "id": "beer_042",
+                    "soldOut": false,
+                    "name": "Africa Pale Ale",
+                    "brewery": "志賀高原ビール(長野)",
+                    "style": "Session IPA",
+                    "catch": "苦味爽やか飲みやすいIPA",
+                    "bitterness": 3,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 2,
+                    "scene": [
+                              "first",
+                              "food",
+                              "party"
+                    ],
+                    "tags": [
+                              "バランス",
+                              "初心者OK",
+                              "ホップ"
+                    ],
+                    "description": "苦味の効いた爽やかな味わい。IPAを飲みやすくアレンジしています。",
+                    "next": "beer_006"
           },
           {
-                "id": "beer_043",
-                "name": "インディアン サマー セゾン",
-                "brewery": "志賀高原ビール",
-                "style": "Saison",
-                "catch": "ドライで香る、食事に寄り添う一杯",
-                "bitterness": 2,
-                "sweetness": 1,
-                "sourness": 2,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 3,
-                "scene": [
-                      "food",
-                      "first"
-                ],
-                "tags": [
-                      "食中酒",
-                      "ドライ",
-                      "スパイシー"
-                ],
-                "description": "ドライな飲み口と酵母由来の香りがあり、料理と合わせながら飲み続けやすい。",
-                "next": "beer_029"
+                    "id": "beer_043",
+                    "soldOut": false,
+                    "name": "Indian Summer Saison",
+                    "brewery": "志賀高原ビール(長野)",
+                    "style": "Belgian Ale",
+                    "catch": "ホップ香るドライなセゾン",
+                    "bitterness": 2,
+                    "sweetness": 1,
+                    "sourness": 2,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 3,
+                    "scene": [
+                              "food",
+                              "first"
+                    ],
+                    "tags": [
+                              "食中酒",
+                              "ドライ",
+                              "スパイシー"
+                    ],
+                    "description": "たっぷりのホップを使った、IPA的なセゾン。セゾン酵母由来のドライな飲み口と、度数を感じさせない軽快さ、嫌みのないフルーティさが特徴です。ニュージーランドとアメリカ産ホップによる青い柑橘のような爽快な香りと、ほどよい苦味が心地よく広がります。",
+                    "next": "beer_029"
           },
           {
-                "id": "beer_044",
-                "name": "ベイビー ブロンド ミヤマ",
-                "brewery": "志賀高原ビール",
-                "style": "Blonde Ale",
-                "catch": "軽やかで親しみやすい、明るいエール",
-                "bitterness": 2,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 3,
-                "body": 2,
-                "adventure": 2,
-                "scene": [
-                      "first",
-                      "food"
-                ],
-                "tags": [
-                      "軽快",
-                      "初心者OK",
-                      "バランス"
-                ],
-                "description": "軽い口当たりと穏やかな香味で、最初の一杯にも食事にも合わせやすい。",
-                "next": "beer_006"
+                    "id": "beer_044",
+                    "soldOut": false,
+                    "name": "Baby Blonde Miyama",
+                    "brewery": "志賀高原ビール(長野)",
+                    "style": "Belgian Ale",
+                    "catch": "軽やかで親しみやすい、明るいエール",
+                    "bitterness": 2,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 3,
+                    "body": 2,
+                    "adventure": 2,
+                    "scene": [
+                              "first",
+                              "food"
+                    ],
+                    "tags": [
+                              "軽快",
+                              "初心者OK",
+                              "バランス"
+                    ],
+                    "description": "酒米「美山錦」を使った、ほんのり甘くもドライで爽快な一杯。信州早生とLORALホップによる、上品さと現代的なフルーティさをあわせ持つ繊細な香りが特徴です。ホッピーながら主張しすぎず、ラーメン、居酒屋料理、前菜やタパスなど、素材を活かした料理に寄り添います。",
+                    "next": "beer_006"
           },
           {
-                "id": "beer_045",
-                "name": "スタウト",
-                "brewery": "箕面ビール",
-                "style": "Stout",
-                "catch": "香ばしく、ゆっくり味わう黒の一杯",
-                "bitterness": 3,
-                "sweetness": 3,
-                "sourness": 1,
-                "aroma": 3,
-                "body": 5,
-                "adventure": 3,
-                "scene": [
-                      "slow",
-                      "food"
-                ],
-                "tags": [
-                      "黒ビール",
-                      "ロースト",
-                      "しっぽり"
-                ],
-                "description": "コーヒーやチョコを思わせる香ばしさがあり、落ち着いて飲みたい人におすすめ。",
-                "next": "beer_025"
+                    "id": "beer_045",
+                    "soldOut": false,
+                    "name": "スタウト",
+                    "brewery": "箕面ビール(大阪)",
+                    "style": "Stout",
+                    "catch": "香ばしく、ゆっくり味わう黒の一杯",
+                    "bitterness": 3,
+                    "sweetness": 3,
+                    "sourness": 1,
+                    "aroma": 3,
+                    "body": 5,
+                    "adventure": 3,
+                    "scene": [
+                              "slow",
+                              "food"
+                    ],
+                    "tags": [
+                              "黒ビール",
+                              "ロースト",
+                              "しっぽり"
+                    ],
+                    "description": "コーヒーやチョコを思わせる香ばしさがあり、落ち着いて飲みたい人におすすめ。",
+                    "next": "beer_025"
           },
           {
-                "id": "beer_046",
-                "name": "ペールエール",
-                "brewery": "箕面ビール",
-                "style": "Pale Ale",
-                "catch": "迷ったらこれ。香りと飲みやすさのバランス型",
-                "bitterness": 3,
-                "sweetness": 2,
-                "sourness": 1,
-                "aroma": 4,
-                "body": 2,
-                "adventure": 2,
-                "scene": [
-                      "first",
-                      "food",
-                      "party"
-                ],
-                "tags": [
-                      "バランス",
-                      "初心者OK",
-                      "ホップ"
-                ],
-                "description": "ほどよいホップ香と苦味で、クラフトビール初心者にもすすめやすいバランス型。",
-                "next": "beer_006"
+                    "id": "beer_046",
+                    "soldOut": false,
+                    "name": "ペールエール",
+                    "brewery": "箕面ビール(大阪)",
+                    "style": "Pale Ale",
+                    "catch": "迷ったらこれ。香りと飲みやすさのバランス型",
+                    "bitterness": 3,
+                    "sweetness": 2,
+                    "sourness": 1,
+                    "aroma": 4,
+                    "body": 2,
+                    "adventure": 2,
+                    "scene": [
+                              "first",
+                              "food",
+                              "party"
+                    ],
+                    "tags": [
+                              "バランス",
+                              "初心者OK",
+                              "ホップ"
+                    ],
+                    "description": "ほどよいホップ香と苦味で、クラフトビール初心者にもすすめやすいバランス型。",
+                    "next": "beer_006"
           }
-    ];
+];
 
     const nextNames = Object.fromEntries(
           beers.map(beer => [beer.id, `${beer.name}（${beer.brewery}）`])
@@ -1763,7 +1806,6 @@
       questionHelp: document.getElementById("questionHelp"),
       choices: document.getElementById("choices"),
       resultBody: document.getElementById("resultBody"),
-      homeRanking: document.getElementById("homeRanking"),
       allBeerList: document.getElementById("allBeerList"),
       beerListDetail: document.getElementById("beerListDetail")
     };
@@ -2124,10 +2166,6 @@
           const rankingElement = el.resultBody.querySelector(".ranking");
           if (rankingElement) rankingElement.innerHTML = likedBeersHtml();
 
-          if (el.homeRanking) {
-            el.homeRanking.innerHTML = likedBeersHtml();
-          }
-
           document.querySelectorAll(`[data-open-beer="${beerId}"]`).forEach(row => {
             row.classList.toggle("liked", hasLiked(beerId));
           });
@@ -2156,10 +2194,6 @@
           <span>${beer.style}</span>
         </div>
       `).join("");
-    }
-
-    function renderHomeRanking() {
-      el.homeRanking.innerHTML = likedBeersHtml();
     }
 
     function renderAllBeerList(activeBeerId = null) {
@@ -2223,12 +2257,10 @@
       el.quiz.classList.add("hidden");
       el.result.classList.add("hidden");
       el.home.classList.remove("hidden");
-      renderHomeRanking();
       renderAllBeerList();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    renderHomeRanking();
     renderAllBeerList();
   </script>
 </body>
