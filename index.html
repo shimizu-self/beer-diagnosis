@@ -1,4 +1,16 @@
 <!doctype html>
+<!--
+            .~~~~.
+            i====i_
+           |cccccc|/
+           |ccccccc|
+           |cccccccc|
+           `\cccccccc|
+            \_cccccc_)
+              `~~~~`
+
+  クラフトビール診断 — Cheers! 🍺
+-->
 <html lang="ja">
 <head>
   <!-- Google Tag Manager -->
@@ -1927,7 +1939,7 @@
     }
 
     function recommendedBeers() {
-      const availableBeers = beers.filter(beer => !beer.soldOut);
+      const availableBeers = beers.filter(beer => !beer.soldOut && !hasLiked(beer.id));
 
       if (availableBeers.length === 0) {
         return [];
@@ -2047,7 +2059,7 @@
           <p>${diagnosis.body}</p>
         </div>
         <div class="results">
-          ${items.length ? items.map((beer, index) => beerCard(beer, index)).join("") : `<article class="beer"><h3>おすすめできるビールがありません</h3><p class="reason">すべて売り切れ設定になっています。ビール定義の <strong>soldOut</strong> を確認してください。</p></article>`}
+          ${items.length ? items.map((beer, index) => beerCard(beer, index)).join("") : `<article class="beer"><h3>おすすめできるビールがありません</h3><p class="reason">候補が売り切れ、または既に「おいしかった」を押し済みのようです。リセットしたい場合は全ビールリストから❤️を外してください。</p></article>`}
         </div>
         <h2 class="section-title">おいしかったビール</h2>
         <div class="ranking">${likedBeersHtml()}</div>
