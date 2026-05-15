@@ -231,6 +231,22 @@
       background: #fafafa;
     }
 
+    .beer-image {
+      display: block;
+      width: 100%;
+      max-width: 220px;
+      aspect-ratio: 1;
+      object-fit: contain;
+      margin: 0 auto 12px;
+      background: #fff7ed;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+    }
+
+    .beer.sold-out .beer-image {
+      filter: grayscale(0.6);
+    }
+
     .sold-out-badge {
       display: inline-flex;
       align-items: center;
@@ -1967,6 +1983,7 @@
       return `
         <article class="beer ${beer.soldOut ? "sold-out" : ""}">
           <div class="rank">No.${index + 1} ${beer.recommendationRole || (index === 0 ? "本命" : index === 1 ? "近いけど違う方向" : "冒険枠")}${soldOutBadge}</div>
+          <img class="beer-image" src="${beerImagePath(beer.id)}" alt="${beer.name}" loading="lazy" onerror="this.style.display='none'" />
           <h3>${beer.name}</h3>
           <div class="meta">${beer.brewery} / ${beer.style}</div>
           <p class="copy">${beer.catch}</p>
@@ -1986,12 +2003,20 @@
       return String(id || "").replace(/^beer_/, "");
     }
 
+    const beerImageExtensions = { beer_030: "png", beer_034: "png" };
+
+    function beerImagePath(beerId) {
+      const ext = beerImageExtensions[beerId] || "jpg";
+      return `image/${beerId}.${ext}`;
+    }
+
     function masterBeerCard(beer) {
       const liked = hasLiked(beer.id) ? "liked" : "";
       const soldOutBadge = beer.soldOut ? `<span class="sold-out-badge">売り切れ</span>` : "";
       return `
         <article class="beer ${beer.soldOut ? "sold-out" : ""}">
           <div class="rank">${displayBeerId(beer.id)} / 全ビールリスト ${soldOutBadge}</div>
+          <img class="beer-image" src="${beerImagePath(beer.id)}" alt="${beer.name}" loading="lazy" onerror="this.style.display='none'" />
           <h3>${beer.name}</h3>
           <div class="meta">${beer.brewery} / ${beer.style}</div>
           <p class="copy">${beer.catch}</p>
