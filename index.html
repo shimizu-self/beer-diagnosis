@@ -247,6 +247,23 @@
       filter: grayscale(0.6);
     }
 
+    .next-beer-link {
+      color: var(--accent-dark);
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+      background: none;
+      border: 0;
+      padding: 0;
+      font-size: inherit;
+      font-family: inherit;
+    }
+
+    .next-beer-link:hover {
+      color: var(--accent);
+    }
+
     .sold-out-badge {
       display: inline-flex;
       align-items: center;
@@ -2017,6 +2034,7 @@
         <div class="ranking">${likedBeersHtml()}</div>
       `;
       bindLikeButtons();
+      bindNextBeerLinks();
     }
 
     function beerCard(beer, index) {
@@ -2031,7 +2049,7 @@
           <p class="copy">${beer.catch}</p>
           <p class="reason">${beer.description}</p>
           <div class="tags">${beer.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
-          <p class="reason"><strong>次に飲むなら：</strong>${nextNames[beer.next] || "店員さんに近い味を聞いてみよう"}</p>
+          <p class="reason"><strong>次に飲むなら：</strong>${nextBeerHtml(beer.next)}</p>
           <div class="beer-actions">
             ${beer.soldOut
               ? `<button class="secondary" disabled>売り切れ</button>`
@@ -2052,6 +2070,13 @@
       return `image/${beerId}.${ext}`;
     }
 
+    function nextBeerHtml(nextId) {
+      if (nextId && nextNames[nextId]) {
+        return `<button type="button" class="next-beer-link" data-jump-beer="${nextId}">${nextNames[nextId]}</button>`;
+      }
+      return "店員さんに近い味を聞いてみよう";
+    }
+
     function masterBeerCard(beer) {
       const liked = hasLiked(beer.id) ? "liked" : "";
       const soldOutBadge = beer.soldOut ? `<span class="sold-out-badge">売り切れ</span>` : "";
@@ -2064,7 +2089,7 @@
           <p class="copy">${beer.catch}</p>
           <p class="reason">${beer.description}</p>
           <div class="tags">${beer.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
-          <p class="reason"><strong>次に飲むなら：</strong>${nextNames[beer.next] || "店員さんに近い味を聞いてみよう"}</p>
+          <p class="reason"><strong>次に飲むなら：</strong>${nextBeerHtml(beer.next)}</p>
           <div class="beer-actions">
             ${beer.soldOut
               ? `<button class="secondary" disabled>売り切れ</button>`
@@ -2231,6 +2256,25 @@
       });
     }
 
+    function bindNextBeerLinks() {
+      document.querySelectorAll("[data-jump-beer]").forEach(link => {
+        if (link.dataset.bound === "1") return;
+        link.dataset.bound = "1";
+        link.addEventListener("click", event => {
+          event.preventDefault();
+          const targetId = link.dataset.jumpBeer;
+          trackEvent("next_beer_link_click", { target_beer_id: targetId });
+          jumpToBeerInList(targetId);
+        });
+      });
+    }
+
+    function jumpToBeerInList(beerId) {
+      showHome();
+      renderAllBeerList(beerId);
+      showMasterBeerCard(beerId);
+    }
+
     function showMasterBeerCard(beerId) {
       const beer = beers.find(item => item.id === beerId);
       if (!beer || !el.beerListDetail) return;
@@ -2250,6 +2294,7 @@
       });
 
       bindLikeButtons();
+      bindNextBeerLinks();
       el.beerListDetail.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
