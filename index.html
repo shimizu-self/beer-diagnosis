@@ -356,6 +356,25 @@
       white-space: nowrap;
     }
 
+    button.ranking-row {
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+      color: inherit;
+      cursor: pointer;
+      box-shadow: none;
+    }
+
+    button.ranking-row:hover {
+      border-color: var(--accent);
+      background: #fff7ed;
+    }
+
+    button.ranking-row span:first-child {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
     .beer-master {
       margin-top: 24px;
       padding-top: 2px;
@@ -2189,7 +2208,10 @@
           if (countElement) countElement.textContent = likeCount(beerId);
 
           const rankingElement = el.resultBody.querySelector(".ranking");
-          if (rankingElement) rankingElement.innerHTML = likedBeersHtml();
+          if (rankingElement) {
+            rankingElement.innerHTML = likedBeersHtml();
+            bindNextBeerLinks();
+          }
 
           document.querySelectorAll(`[data-open-beer="${beerId}"]`).forEach(row => {
             row.classList.toggle("liked", hasLiked(beerId));
@@ -2214,10 +2236,10 @@
       }
 
       return likedBeers.map((beer, index) => `
-        <div class="ranking-row">
+        <button type="button" class="ranking-row ranking-row-link" data-jump-beer="${beer.id}">
           <span>${index + 1}. ${beer.name}</span>
           <span>${beer.style}</span>
-        </div>
+        </button>
       `).join("");
     }
 
